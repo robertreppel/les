@@ -7,7 +7,7 @@ import (
 )
 
 func TestShouldIgnoreLinesWithLeadingSlashes(t *testing.T) {
-	input := []string{"// User Registered  "}
+	input := []string{": User Registered  "}
 	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)

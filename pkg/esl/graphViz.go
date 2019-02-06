@@ -64,7 +64,7 @@ func ToGraphViz(eslString string) string {
 		// This is a hack to support commands with parameters without the '//' slashes.
 		// "command -> // param1" and "command -> param1" should both be valid ... because
 		// it turns out that users commonly forget the forward slashes when entering ESL commands.
-		if strings.Contains(postitNote, "->") && !strings.Contains(postitNote, "//") {
+		if strings.Contains(postitNote, "->") && !strings.Contains(postitNote, ":") {
 			postitNote = strings.Replace(postitNote, "->", "-> // ", -1)
 		}
 		graphVizDotPropertiesList := ""
@@ -88,10 +88,10 @@ func ToGraphViz(eslString string) string {
 			continue
 		}
 		// Skip comment lines:
-		if string(postitNote[0]) == "#" {
+		if string(postitNote[0]) == "//" {
 			continue
 		}
-		postitNoteParts := strings.Split(postitNote, "//")
+		postitNoteParts := strings.Split(postitNote, ":")
 		name := postitNoteParts[0]
 		name = strings.Trim(name, " ")
 

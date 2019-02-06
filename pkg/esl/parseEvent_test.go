@@ -7,7 +7,7 @@ import (
 )
 
 func TestShouldGetEventWithProperties(t *testing.T) {
-	input := []string{"User Registered // userId, email, password                     "}
+	input := []string{"User Registered : userId, email, password                     "}
 	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
@@ -27,7 +27,7 @@ func TestShouldGetEventWithProperties(t *testing.T) {
 }
 
 func TestShouldGetProperties(t *testing.T) {
-	input := []string{"User Registered // userId,email,password                     "}
+	input := []string{"User Registered : userId,email,password                     "}
 	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
@@ -57,7 +57,7 @@ func TestShouldGetProperties(t *testing.T) {
 }
 
 func TestShouldGetPropertiesWithTrailingComma(t *testing.T) {
-	input := []string{"User Registered // userId,email,password,                     "}
+	input := []string{"User Registered : userId,email,password,                     "}
 	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
@@ -107,7 +107,7 @@ func TestShouldGetEventWithoutProperties(t *testing.T) {
 }
 
 func TestShouldGetEventWithoutPropertiesWithTrailingSlashes(t *testing.T) {
-	input := []string{"User Registered //  "}
+	input := []string{"User Registered :  "}
 	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
@@ -143,7 +143,7 @@ func TestShouldNotReturnEventWhenCommandGiven(t *testing.T) {
 	}
 }
 func TestShouldNotReturnEventWhenDocumentGiven(t *testing.T) {
-	input := []string{"A Read Model* // one,two"}
+	input := []string{"A Read Model* : one,two"}
 	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)

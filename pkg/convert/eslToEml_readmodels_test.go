@@ -10,10 +10,10 @@ import (
 
 func Test_should_create_readmodel(t *testing.T) {
 	input := []string{
-		"# Timesheets",
+		"// Timesheets",
 		"Create ->",
-		"User Created // name",
-		"User List* // userId, name",
+		"User Created : name",
+		"User List* : userId, name",
 	}
 	markdown, err := esl.Parse(input)
 	if err != nil {
@@ -44,8 +44,8 @@ func Test_should_create_readmodel(t *testing.T) {
 
 func TestShouldFailValidationIfNoReadmodelKeyPresent(t *testing.T) {
 	input := []string{
-		"# Timesheets",
-		"User Registered // userId, email",
+		"// Timesheets",
+		"User Registered : userId, email",
 		"User List*",
 	}
 	markdown, err := esl.Parse(input)
@@ -69,12 +69,12 @@ func TestShouldFailValidationIfNoReadmodelKeyPresent(t *testing.T) {
 
 func TestReadmodelShouldHaveSubscribesToEvents(t *testing.T) {
 	input := []string{
-		"# Timesheets",
+		"// Timesheets",
 		"Register User->",
-		"User Registered // userId, email, password",
+		"User Registered : userId, email, password",
 		"Create Timesheet->",
-		"Timesheet Created // timesheetId, userId, date",
-		"User List* // userId, email, date",
+		"Timesheet Created : timesheetId, userId, date",
+		"User List* : userId, email, date",
 	}
 	markdown, err := esl.Parse(input)
 	if err != nil {
@@ -120,12 +120,12 @@ func TestReadmodelShouldHaveSubscribesToEvents(t *testing.T) {
 
 func TestReadmodelShouldNotSubscribeToUnneededEvents(t *testing.T) {
 	input := []string{
-		"# Timesheets",
+		"// Timesheets",
 		"Register User->",
-		"User Registered // userId, email, password",
+		"User Registered : userId, email, password",
 		"Create Timesheet->",
-		"Timesheet Created // timesheetId, date",
-		"Email List* // userId, email",
+		"Timesheet Created : timesheetId, date",
+		"Email List* : userId, email",
 	}
 	markdown, err := esl.Parse(input)
 	if err != nil {
@@ -158,12 +158,12 @@ func TestReadmodelShouldNotSubscribeToUnneededEvents(t *testing.T) {
 // their properties in a denormalized flat table. This is not a desirable behaviour at this time.
 func TestReadmodelShouldNotSubscribeToEventsDueToStreamIdFields(t *testing.T) {
 	input := []string{
-		"# Timesheets",
+		"// Timesheets",
 		"Register User->",
-		"User Registered // userId, email, password",
+		"User Registered : userId, email, password",
 		"Create Timesheet->",
-		"Timesheet Created // timesheetId, date",
-		"Email List* // userId, email, timesheetId",
+		"Timesheet Created : timesheetId, date",
+		"Email List* : userId, email, timesheetId",
 	}
 	markdown, err := esl.Parse(input)
 	if err != nil {
@@ -193,13 +193,13 @@ func TestReadmodelShouldNotSubscribeToEventsDueToStreamIdFields(t *testing.T) {
 
 // For a ESL read model to be valid it needs to have at least one property because the first property
 // after the slashes is assumed to be the read model key - which is required because we can't have read models without keys.
-// Example:  'UserList* // userId' is valid. 'UserList* //' or 'UserList*' is not.
+// Example:  'UserList* : userId' is valid. 'UserList* :' or 'UserList*' is not.
 func TestReadmodelShouldHaveMissingKeyValidationErrorIfThereIsNoPropertyAfterDoubleSlashes(t *testing.T) {
 	input := []string{
-		"# Users",
+		"// Users",
 		"Register User->",
-		"User Registered // userId, email, password",
-		"UserList* //",
+		"User Registered : userId, email, password",
+		"UserList* :",
 	}
 
 	markdown, err := esl.Parse(input)

@@ -6,8 +6,8 @@ import (
 )
 
 func parseDocument(eslInput string, lineItems []Item) []Item {
-	if strings.Contains(eslInput, "//") {
-		re, err := regexp.Compile("^(.*) *\\* *\\/\\/ *(.*)")
+	if strings.Contains(eslInput, ":") {
+		re, err := regexp.Compile("^(.*) *\\* *\\: *(.*)")
 		if err != nil {
 			panic(err)
 		}

@@ -10,8 +10,8 @@ import (
 
 func TestShouldCreateCommand(t *testing.T) {
 	input := []string{
-		"# Timesheets",
-		"Register-> // userId, email, password",
+		"// Timesheets",
+		"Register-> : userId, email, password",
 		"User Registered",
 	}
 	markdown, err := esl.Parse(input)
@@ -31,8 +31,8 @@ func TestShouldCreateCommand(t *testing.T) {
 
 func TestCreateCommandParametersCorrect(t *testing.T) {
 	input := []string{
-		"# Timesheets",
-		"Register-> // userId, email, password",
+		"// Timesheets",
+		"Register-> : userId, email, password",
 		"User Registered",
 	}
 	markdown, err := esl.Parse(input)
@@ -53,8 +53,8 @@ func TestCreateCommandParametersCorrect(t *testing.T) {
 
 func TestShouldCreateOneCommandFor2EventPostconditions(t *testing.T) {
 	input := []string{
-		"# Timesheets",
-		"Register-> // userId, email, password",
+		"// Timesheets",
+		"Register-> : userId, email, password",
 		"User Registered",
 		"User Registration Confirmed",
 	}
@@ -74,10 +74,10 @@ func TestShouldCreateOneCommandFor2EventPostconditions(t *testing.T) {
 }
 func TestCommandShouldHaveParameters(t *testing.T) {
 	input := []string{
-		"# Timesheets",
-		"Register-> // userId, password",
-		"User Registered // userId, password",
-		"User Registration Confirmed // userId",
+		"// Timesheets",
+		"Register-> : userId, password",
+		"User Registered : userId, password",
+		"User Registration Confirmed : userId",
 	}
 	markdown, err := esl.Parse(input)
 	if err != nil {
@@ -115,8 +115,8 @@ func TestCommandShouldHaveParameters(t *testing.T) {
 
 func TestCommandShouldHavePostconditions(t *testing.T) {
 	input := []string{
-		"# Timesheets",
-		"Register-> // userId, password",
+		"// Timesheets",
+		"Register-> : userId, password",
 		"User Registered",
 		"User Registration Confirmed",
 	}
@@ -142,7 +142,7 @@ func TestCommandShouldHavePostconditions(t *testing.T) {
 
 func TestCommandMustHaveAggregateIdBasedOnStreamName(t *testing.T) {
 	input := []string{
-		"# Timesheets",
+		"// Timesheets",
 		"Register->",
 		"User Registered",
 		"User Registration Confirmed",
@@ -179,12 +179,12 @@ func TestCommandMustHaveAggregateIdBasedOnStreamName(t *testing.T) {
 }
 func TestCommandMustHaveMustExistRuleForAggregateIdsOtherThanTheOneOfStreamTheCommandBelongsTo(t *testing.T) {
 	input := []string{
-		"# Timesheets",
-		"Register-> // email",
-		"User Registered // email",
-		"Create Timesheet-> // timesheetId, userId, date",
-		"Timesheet Created // timesheetId, userId, date",
-		"UserLookup* // userId, date",
+		"// Timesheets",
+		"Register-> : email",
+		"User Registered : email",
+		"Create Timesheet-> : timesheetId, userId, date",
+		"Timesheet Created : timesheetId, userId, date",
+		"UserLookup* : userId, date",
 	}
 	markdown, err := esl.Parse(input)
 	if err != nil {
@@ -225,8 +225,8 @@ func stringInSlice(a string, list []string) bool {
 
 func TestCommandShouldNotGenerateAggregateIdIfOneAlreadyExists(t *testing.T) {
 	input := []string{
-		"# Timesheets",
-		"Register-> // userId",
+		"// Timesheets",
+		"Register-> : userId",
 		"User Registered",
 	}
 	markdown, err := esl.Parse(input)
@@ -262,8 +262,8 @@ func TestCommandShouldNotGenerateAggregateIdIfOneAlreadyExists(t *testing.T) {
 
 func TestAddingAggregateIdToCommandParametersShouldPreserveOtherParameters(t *testing.T) {
 	input := []string{
-		"# Timesheets",
-		"Register-> // name",
+		"// Timesheets",
+		"Register-> : name",
 		"User Registered",
 	}
 	markdown, err := esl.Parse(input)
@@ -536,12 +536,12 @@ Errors: []
 }
 func TestParameterWithAggregatePostfixMustExistInReadmodelThatExistsAndHasKeySucceeds(t *testing.T) {
 	input := []string{
-		"# Email System",
-		"Register -> // userId, email, password",
-		"User Registered // userId, email, hashedPassword",
-		"Send Mail -> // emailId, fromUserId, toUserId, subject, body",
-		"Email Sent // emailId, fromUserId, toUserId, subject, body",
-		"UserLookup* // userId, email",
+		"// Email System",
+		"Register -> : userId, email, password",
+		"User Registered : userId, email, hashedPassword",
+		"Send Mail -> : emailId, fromUserId, toUserId, subject, body",
+		"Email Sent : emailId, fromUserId, toUserId, subject, body",
+		"UserLookup* : userId, email",
 	}
 
 	markdown, err := esl.Parse(input)

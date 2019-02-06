@@ -7,7 +7,7 @@ import (
 )
 
 func TestShouldGetCommandWithParameters(t *testing.T) {
-	input := []string{"  Validate Registration  -> // userId                     "}
+	input := []string{"  Validate Registration  -> : userId                     "}
 	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
@@ -48,7 +48,7 @@ func Test_should_get_command_with_parameters_without_slashes(t *testing.T) {
 }
 
 func TestShouldFindCommandParameters(t *testing.T) {
-	input := []string{"Validate->// userId  ,  "}
+	input := []string{"Validate->: userId  ,  "}
 	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
@@ -97,7 +97,7 @@ func TestShouldGetCommandWithoutProperties(t *testing.T) {
 }
 
 func TestShouldGetCommandWithoutPropertiesWithTrailingSlashes(t *testing.T) {
-	input := []string{"Register->//  "}
+	input := []string{"Register->:  "}
 	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)

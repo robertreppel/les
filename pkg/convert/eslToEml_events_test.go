@@ -9,7 +9,7 @@ import (
 
 func TestShouldCreateEvents(t *testing.T) {
 	input := []string{
-		"# Timesheets",
+		"// Timesheets",
 		"User Registered",
 		"Timesheet Created",
 		"Timesheet Submitted",
@@ -53,8 +53,8 @@ func TestShouldCreateEvents(t *testing.T) {
 }
 func TestEventsShouldHaveCorrectNumberAndTypeOfProperties(t *testing.T) {
 	input := []string{
-		"# Timesheets",
-		"User Registered // userId, password",
+		"// Timesheets",
+		"User Registered : userId, password",
 	}
 	markdown, err := esl.Parse(input)
 	if err != nil {
@@ -100,8 +100,8 @@ func TestEventsShouldHaveCorrectNumberAndTypeOfProperties(t *testing.T) {
 
 func TestEventsWithoutAggregateIdShouldHaveAggregateIdAdded(t *testing.T) {
 	input := []string{
-		"# Timesheets",
-		"User Registered // password",
+		"// Timesheets",
+		"User Registered : password",
 	}
 	markdown, err := esl.Parse(input)
 	if err != nil {
@@ -136,7 +136,7 @@ func TestEventsWithoutAggregateIdShouldHaveAggregateIdAdded(t *testing.T) {
 
 func TestShouldNotAllowOnOneWordEvents(t *testing.T) {
 	input := []string{
-		"# Timesheets",
+		"// Timesheets",
 		"UserRegistered",
 	}
 	markdown, err := esl.Parse(input)
@@ -155,8 +155,8 @@ func TestShouldNotAllowOnOneWordEvents(t *testing.T) {
 
 func TestShouldStripSpacesFromEventPropertyNames(t *testing.T) {
 	input := []string{
-		"# Timesheets",
-		"User Registered // User Email",
+		"// Timesheets",
+		"User Registered : User Email",
 	}
 	markdown, err := esl.Parse(input)
 	if err != nil {
@@ -180,9 +180,9 @@ func TestShouldStripSpacesFromEventPropertyNames(t *testing.T) {
 
 func TestShouldStripSpacesFromCommandParameterNames(t *testing.T) {
 	input := []string{
-		"# Timesheets",
-		"Register User->//User Email",
-		"User Registered // email",
+		"// Timesheets",
+		"Register User->:User Email",
+		"User Registered : email",
 	}
 	markdown, err := esl.Parse(input)
 	if err != nil {

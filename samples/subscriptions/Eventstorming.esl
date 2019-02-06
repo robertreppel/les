@@ -1,10 +1,10 @@
-# Subscriptions
+// Subscriptions
 
-Subscribe-> subscriptionId, name
-Subscription Started // subscriptionId, name
+Subscribe-> : subscriptionId, name
+Subscription Started : subscriptionId, name
 Deliver->
 Subscription Received
 Cancel->
 Subscription Cancelled
-Subscription List* // subscriptionId, name
+Subscription List* : subscriptionId, name
 

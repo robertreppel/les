@@ -429,7 +429,7 @@ func (l *lexer) atTerminator() bool {
 	case eof, '.', ',', '|', ':', ')', '(':
 		return true
 	}
-	// Does r start the delimiter? This can be ambiguous (with delim=="//", $x/2 will
+	// Does r start the delimiter? This can be ambiguous (with delim==":", $x/2 will
 	// succeed but should fail) but only in extremely rare cases caused by willfully
 	// bad choice of delimiter.
 	if rd, _ := utf8.DecodeRuneInString(l.rightDelim); rd == r {

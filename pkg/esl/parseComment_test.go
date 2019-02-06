@@ -7,7 +7,7 @@ import (
 )
 
 func TestComments(t *testing.T) {
-	input := []string{"# This is a comment                     "}
+	input := []string{"// This is a comment                     "}
 	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)

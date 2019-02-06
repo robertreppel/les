@@ -9,10 +9,14 @@ func Parse(eslInput []string) (Esl, error) {
 	eventMarkdown := Esl{}
 	var lineItems = []Item{}
 	for _, line := range eslInput {
-		if len(line) <= 2 || line[:2] == "//" {
+		trimmed := strings.Trim(line, " ")
+		if len(trimmed) > 0 && trimmed[0] == ':' {
 			continue
 		}
-		if strings.Contains(line, "#") {
+		if len(line) <= 2 || line[:2] == ":" {
+			continue
+		}
+		if strings.Contains(line, "//") {
 			lineItems = parseComment(line, lineItems)
 		} else if !strings.Contains(line, "->") && !strings.Contains(line, "*") {
 			lineItems = parseEvent(line, lineItems)

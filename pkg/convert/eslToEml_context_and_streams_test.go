@@ -8,7 +8,7 @@ import (
 )
 
 func TestShouldCreateBoundedContextFromFirstComment(t *testing.T) {
-	input := []string{"# Timesheets"}
+	input := []string{"// Timesheets"}
 	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
@@ -29,7 +29,7 @@ func TestShouldCreateBoundedContextFromFirstComment(t *testing.T) {
 
 func TestShouldCreateStreamsFromFirstWordsInEventNames(t *testing.T) {
 	input := []string{
-		"# Timesheets",
+		"// Timesheets",
 		"User Registered",
 		"Timesheet Created",
 		"Timesheet Submitted",
@@ -70,7 +70,7 @@ func TestShouldCreateStreamsFromFirstWordsInEventNames(t *testing.T) {
 // This is because by convention the first word ("User") of an event is the name of the stream the event belongs to.
 func TestShouldNotCreateStreamsFromOneWordEvents(t *testing.T) {
 	input := []string{
-		"# Timesheets",
+		"// Timesheets",
 		"UserRegistered",
 	}
 	markdown, err := esl.Parse(input)

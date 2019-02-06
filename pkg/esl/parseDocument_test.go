@@ -7,7 +7,7 @@ import (
 )
 
 func TestShouldGetDocumentWithParameters(t *testing.T) {
-	input := []string{"  Validate Registration  -> // userId                     "}
+	input := []string{"  Validate Registration  -> : userId                     "}
 	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
@@ -27,7 +27,7 @@ func TestShouldGetDocumentWithParameters(t *testing.T) {
 }
 
 func TestShouldGetDocumentParameters(t *testing.T) {
-	input := []string{"Users* // userId,email"}
+	input := []string{"Users* : userId,email"}
 	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
@@ -54,7 +54,7 @@ func TestShouldGetDocumentParameters(t *testing.T) {
 }
 
 func TestShouldGetDocumentParametersWithTrailingComma(t *testing.T) {
-	input := []string{"Users* // userId,email  ,     "}
+	input := []string{"Users* : userId,email  ,     "}
 	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
@@ -81,7 +81,7 @@ func TestShouldGetDocumentParametersWithTrailingComma(t *testing.T) {
 }
 
 func TestShouldGetDocumentProperties(t *testing.T) {
-	input := []string{"Register* // userId,email,password                     "}
+	input := []string{"Register* : userId,email,password                     "}
 	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
@@ -131,7 +131,7 @@ func TestShouldGetDocumentWithoutProperties(t *testing.T) {
 }
 
 func TestShouldGetDocumentWithoutPropertiesWithTrailingSlashes(t *testing.T) {
-	input := []string{"A List* //"}
+	input := []string{"A List* :"}
 	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
