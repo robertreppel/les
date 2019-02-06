@@ -1,4 +1,4 @@
-// Online Ordering
+/// Online Ordering
 
 Create Inventory Item-> : sku, description
 Inventory*
