@@ -1,12 +1,12 @@
-package emd
+package esl
 
 import (
 	"strings"
 )
 
-func parseCommand(emdInput string, lineItems []Item) []Item {
-	emdInput = strings.Trim(emdInput, " ")
-	parts := strings.Split(emdInput, "->")
+func parseCommand(eslInput string, lineItems []Item) []Item {
+	eslInput = strings.Trim(eslInput, " ")
+	parts := strings.Split(eslInput, "->")
 	commandName := strings.Trim(parts[0], " ")
 	propertiesString := strings.Replace(parts[1], "/", "", -1)
 	propertiesString = strings.Replace(propertiesString, " ", "", -1)

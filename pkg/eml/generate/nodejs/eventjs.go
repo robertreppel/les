@@ -6,7 +6,7 @@ import (
 	"log"
 	"sort"
 
-	"github.com/Adaptech/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/eml"
 )
 
 // EventToJs renders nodeJs for an event

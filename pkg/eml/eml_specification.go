@@ -1,4 +1,4 @@
-// Package eml implements the Event Markup Language specification
+// Package eml implements the Event Modeling Language Language specification
 package eml
 
 // A Solution describes an event sourced system

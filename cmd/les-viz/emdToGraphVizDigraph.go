@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 
-	"github.com/Adaptech/les/pkg/emd"
+	"github.com/robertreppel/les/pkg/esl"
 )
 
-func emdToGraphVizDigraph(inputFile string) error {
+func eslToGraphVizDigraph(inputFile string) error {
 	if inputFile == "" {
 		fmt.Println("No input file found. Try 'les-viz --help'.")
 		return nil
@@ -16,7 +16,7 @@ func emdToGraphVizDigraph(inputFile string) error {
 	if err != nil {
 		return fmt.Errorf("les-viz: %v", err)
 	}
-	graphVizDigraph := emd.ToGraphViz(string(eventstorming))
+	graphVizDigraph := esl.ToGraphViz(string(eventstorming))
 	fmt.Println(graphVizDigraph)
 	return nil
 }

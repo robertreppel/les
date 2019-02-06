@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Adaptech/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/eml"
 )
 
 func Test_must_have_boundedContext(t *testing.T) {

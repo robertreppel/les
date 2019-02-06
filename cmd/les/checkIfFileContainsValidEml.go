@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/Adaptech/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/eml"
 )
 
 func checkIfFileContainsValidEml(inputFile string) (bool, error) {

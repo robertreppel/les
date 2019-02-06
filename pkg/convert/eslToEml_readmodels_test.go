@@ -3,9 +3,9 @@ package convert_test
 import (
 	"testing"
 
-	"github.com/Adaptech/les/pkg/convert"
-	"github.com/Adaptech/les/pkg/emd"
-	"github.com/Adaptech/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/convert"
+	"github.com/robertreppel/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/esl"
 )
 
 func Test_should_create_readmodel(t *testing.T) {
@@ -15,11 +15,11 @@ func Test_should_create_readmodel(t *testing.T) {
 		"User Created // name",
 		"User List* // userId, name",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	conversionResult, err := convert.EmdToEml(markdown)
+	conversionResult, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -29,7 +29,7 @@ func Test_should_create_readmodel(t *testing.T) {
 		t.Error("unexpected EML validation error")
 	}
 	if len(conversionResult.MarkdownValidationErrors) > 0 {
-		t.Error("unexpected EMD validation error")
+		t.Error("unexpected ESL validation error")
 	}
 
 	if len(context.Readmodels) != 1 {
@@ -48,11 +48,11 @@ func TestShouldFailValidationIfNoReadmodelKeyPresent(t *testing.T) {
 		"User Registered // userId, email",
 		"User List*",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -76,11 +76,11 @@ func TestReadmodelShouldHaveSubscribesToEvents(t *testing.T) {
 		"Timesheet Created // timesheetId, userId, date",
 		"User List* // userId, email, date",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -88,7 +88,7 @@ func TestReadmodelShouldHaveSubscribesToEvents(t *testing.T) {
 	context := markup.Eml.Contexts[0]
 
 	if len(markup.Eml.Errors) != 0 || len(markup.MarkdownValidationErrors) != 0 {
-		t.Error("expected no eml or emd validation errors")
+		t.Error("expected no eml or esl validation errors")
 	}
 
 	readmodel := context.Readmodels[0]
@@ -127,11 +127,11 @@ func TestReadmodelShouldNotSubscribeToUnneededEvents(t *testing.T) {
 		"Timesheet Created // timesheetId, date",
 		"Email List* // userId, email",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -139,7 +139,7 @@ func TestReadmodelShouldNotSubscribeToUnneededEvents(t *testing.T) {
 	context := markup.Eml.Contexts[0]
 
 	if len(markup.Eml.Errors) != 0 || len(markup.MarkdownValidationErrors) != 0 {
-		t.Error("expected no eml or emd validation errors")
+		t.Error("expected no eml or esl validation errors")
 	}
 
 	readmodel := context.Readmodels[0]
@@ -165,11 +165,11 @@ func TestReadmodelShouldNotSubscribeToEventsDueToStreamIdFields(t *testing.T) {
 		"Timesheet Created // timesheetId, date",
 		"Email List* // userId, email, timesheetId",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -177,7 +177,7 @@ func TestReadmodelShouldNotSubscribeToEventsDueToStreamIdFields(t *testing.T) {
 	context := markup.Eml.Contexts[0]
 
 	if len(markup.Eml.Errors) != 0 || len(markup.MarkdownValidationErrors) != 0 {
-		t.Error("expected no eml or emd validation errors")
+		t.Error("expected no eml or esl validation errors")
 	}
 
 	readmodel := context.Readmodels[0]
@@ -191,7 +191,7 @@ func TestReadmodelShouldNotSubscribeToEventsDueToStreamIdFields(t *testing.T) {
 	}
 }
 
-// For a EMD read model to be valid it needs to have at least one property because the first property
+// For a ESL read model to be valid it needs to have at least one property because the first property
 // after the slashes is assumed to be the read model key - which is required because we can't have read models without keys.
 // Example:  'UserList* // userId' is valid. 'UserList* //' or 'UserList*' is not.
 func TestReadmodelShouldHaveMissingKeyValidationErrorIfThereIsNoPropertyAfterDoubleSlashes(t *testing.T) {
@@ -202,11 +202,11 @@ func TestReadmodelShouldHaveMissingKeyValidationErrorIfThereIsNoPropertyAfterDou
 		"UserList* //",
 	}
 
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -214,7 +214,7 @@ func TestReadmodelShouldHaveMissingKeyValidationErrorIfThereIsNoPropertyAfterDou
 	context := markup.Eml.Contexts[0]
 
 	if len(markup.Eml.Errors) != 2 || len(markup.MarkdownValidationErrors) != 0 {
-		t.Error("expected different numbers of eml and emd validation errors")
+		t.Error("expected different numbers of eml and esl validation errors")
 	}
 
 	readmodel := context.Readmodels[0]

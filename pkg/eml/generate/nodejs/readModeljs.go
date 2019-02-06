@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"log"
 
-	"github.com/Adaptech/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/eml"
 )
 
 // ReadmodelsToJs renders nodeJs for a command

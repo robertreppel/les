@@ -10,9 +10,9 @@ import (
 
 	"net/http"
 
-	"github.com/Adaptech/les/pkg/eml"
-	"github.com/Adaptech/les/pkg/eml/generate"
-	"github.com/Adaptech/les/pkg/utils"
+	"github.com/robertreppel/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/eml/generate"
+	"github.com/robertreppel/les/pkg/utils"
 	"github.com/ghodss/yaml"
 	"encoding/json"
 	"strings"

@@ -3,17 +3,17 @@ package convert_test
 import (
 	"testing"
 
-	"github.com/Adaptech/les/pkg/convert"
-	"github.com/Adaptech/les/pkg/emd"
+	"github.com/robertreppel/les/pkg/convert"
+	"github.com/robertreppel/les/pkg/esl"
 )
 
 func TestShouldCreateBoundedContextFromFirstComment(t *testing.T) {
 	input := []string{"# Timesheets"}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -34,11 +34,11 @@ func TestShouldCreateStreamsFromFirstWordsInEventNames(t *testing.T) {
 		"Timesheet Created",
 		"Timesheet Submitted",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -73,11 +73,11 @@ func TestShouldNotCreateStreamsFromOneWordEvents(t *testing.T) {
 		"# Timesheets",
 		"UserRegistered",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}

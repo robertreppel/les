@@ -1,6 +1,6 @@
 package rules
 
-import "github.com/Adaptech/les/pkg/eml"
+import "github.com/robertreppel/les/pkg/eml"
 
 // Validator determines if an input contains valid rules.
 func Validator(input string) ([]eml.ValidationError, error) {

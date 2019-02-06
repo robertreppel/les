@@ -18,7 +18,7 @@ LES is currently in alpha. We have started using 1. and 2. in Real Life projects
 
 See also: [LES FAQ](https://docs.letseventsource.org/faq/)
 
-![LESTER Pipeline](https://github.com/Adaptech/les/blob/master/LESTER-stack-diagram.png)
+![LESTER Pipeline](https://github.com/robertreppel/les/blob/master/LESTER-stack-diagram.png)
 
 ## Getting Started
 
@@ -32,7 +32,7 @@ See also: [LES FAQ](https://docs.letseventsource.org/faq/)
 **Latest version from source:**
 
 ```bash
-git clone https://github.com/Adaptech/les.git
+git clone https://github.com/robertreppel/les.git
 make install
 ```
 
@@ -45,7 +45,7 @@ make install
 
 **Step 1:**
 
-Create an [Event Markdown](https://webeventstorming.com) file. Event Markdown (EMD) is a simple language used to describe an [event storming](https://ziobrando.blogspot.ca/2013/11/introducing-event-storming.html):
+Create an [Event Storming Language](https://webeventstorming.com) file. Event Storming Language (ESL) is a simple language used to describe an [event storming](https://ziobrando.blogspot.ca/2013/11/introducing-event-storming.html):
 
 ```bash
 # TODO List
@@ -53,7 +53,7 @@ Add Item -> // description, dueDate
 Todo Added // description, dueDate
 TODO List* // todoId, description, dueDate
 ```
-Save it to ```Eventstorming.emd```. 
+Save it to ```Eventstorming.esl```. 
 
 **Step 2:**
 
@@ -82,7 +82,7 @@ There is no step 3.
 
 * Tutorial & FAQ: https://docs.letseventsource.org
 
-* A collection of Event Markdown (EMD) examples: https://github.com/Adaptech/les/tree/master/samples
+* A collection of Event Storming Language (ESL) examples: https://github.com/robertreppel/les/tree/master/samples
 
 * Learn Event Storming: http://eventstorming.com
 
@@ -90,25 +90,29 @@ There is no step 3.
 
 ## IDE Integrations & Tools
 
-* Event Markdown [vscode extension](https://github.com/markgukov/vscode-event-markdown)
+* Event Storming Language [vscode extension](https://github.com/markgukov/vscode-event-markdown)
 
 ## Known UX Impacting Issues
 
-The issues below have been known to mystify EMD users:
+The issues below have been known to mystify ESL users:
 
 #### Sporadic Race condition when doing ```cd api && npm install && docker-compose up -d```
 
 API doesn't start because Eventstore isn't up yet. (Workaround: ```docker-compose restart api```)
 
-https://github.com/Adaptech/les/issues/11
+https://github.com/robertreppel/les/issues/11
 
 #### Need to have at least one read model parameter which is not an aggregate ID
 
-https://github.com/Adaptech/les/issues/10
+https://github.com/robertreppel/les/issues/10
 
 ## Running The Tests
 
-```make test-all```
+```make test```
+
+```make test-esl-compliance```
+
+```make test-eml-compliance```
 
 ## Roadmap
 

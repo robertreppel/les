@@ -6,11 +6,11 @@ dist: dist-les dist-les-node installation-instructions commit-tag-push
 
 .PHONY: dist-les
 dist-les:
-	./go-multi-platform-build.sh github.com/Adaptech/les/cmd/les ../../releases/les/$(VERSION)
+	./go-multi-platform-build.sh github.com/robertreppel/les/cmd/les ../../releases/les/$(VERSION)
 
 .PHONY: dist-les-node
 dist-les-node:
-	./go-multi-platform-build.sh github.com/Adaptech/les/cmd/les-node ../../releases/les-node/$(VERSION)
+	./go-multi-platform-build.sh github.com/robertreppel/les/cmd/les-node ../../releases/les-node/$(VERSION)
 
 .PHONY: installation-instructions
 installation-instructions:

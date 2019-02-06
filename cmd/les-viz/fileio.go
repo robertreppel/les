@@ -46,25 +46,25 @@ func ReadFile(file string) ([]byte, error) {
 	return fileContent, nil
 }
 
-func useDefaultEmdOrEmlFileIfInputFileNotSpecified(fileArg string) string {
+func useDefaultEslOrEmlFileIfInputFileNotSpecified(fileArg string) string {
 	inputFile := ""
 	if fileExists(fileArg) {
 		inputFile = fileArg
 	} else {
-		if fileExists(defaultEmdFile) {
-			inputFile = defaultEmdFile
+		if fileExists(defaultEslFile) {
+			inputFile = defaultEslFile
 		}
 	}
 	return inputFile
 }
 
-func useDefaultEmdFileIfInputFileNotSpecified(fileArg string) string {
+func useDefaultEslFileIfInputFileNotSpecified(fileArg string) string {
 	inputFile := ""
 	if fileExists(fileArg) {
 		inputFile = fileArg
 	} else {
-		if fileExists(defaultEmdFile) {
-			inputFile = defaultEmdFile
+		if fileExists(defaultEslFile) {
+			inputFile = defaultEslFile
 		}
 	}
 	return inputFile

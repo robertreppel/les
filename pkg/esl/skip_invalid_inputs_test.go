@@ -1,14 +1,14 @@
-package emd_test
+package esl_test
 
 import (
 	"testing"
 
-	"github.com/Adaptech/les/pkg/emd"
+	"github.com/robertreppel/les/pkg/esl"
 )
 
 func TestShouldIgnoreLinesWithLeadingSlashes(t *testing.T) {
 	input := []string{"// User Registered  "}
-	result, err := emd.Parse(input)
+	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
@@ -20,7 +20,7 @@ func TestShouldIgnoreLinesWithLeadingSlashes(t *testing.T) {
 
 func TestShouldIgnoreLinesWithLessThan2Characters(t *testing.T) {
 	input := []string{"xx"}
-	result, err := emd.Parse(input)
+	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
@@ -31,7 +31,7 @@ func TestShouldIgnoreLinesWithLessThan2Characters(t *testing.T) {
 }
 func TestShouldSkipBlankLines(t *testing.T) {
 	input := []string{""}
-	result, err := emd.Parse(input)
+	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}

@@ -6,7 +6,7 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
-// LoadYAML loads Event Markup Language YAML into a solution for further processing
+// LoadYAML loads Event Modeling Language Language YAML into a solution for further processing
 func (c *Solution) LoadYAML(eml []byte) Solution {
 	err := yaml.Unmarshal(eml, c)
 	if err != nil {

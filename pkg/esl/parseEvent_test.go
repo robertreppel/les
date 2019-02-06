@@ -1,14 +1,14 @@
-package emd_test
+package esl_test
 
 import (
 	"testing"
 
-	"github.com/Adaptech/les/pkg/emd"
+	"github.com/robertreppel/les/pkg/esl"
 )
 
 func TestShouldGetEventWithProperties(t *testing.T) {
 	input := []string{"User Registered // userId, email, password                     "}
-	result, err := emd.Parse(input)
+	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
@@ -17,8 +17,8 @@ func TestShouldGetEventWithProperties(t *testing.T) {
 		return
 	}
 	switch result.Lines[0].(type) {
-	case emd.Event:
-		if result.Lines[0].(emd.Event).Name != "User Registered" {
+	case esl.Event:
+		if result.Lines[0].(esl.Event).Name != "User Registered" {
 			t.Error("Unexpected Event.Name")
 		}
 	default:
@@ -28,7 +28,7 @@ func TestShouldGetEventWithProperties(t *testing.T) {
 
 func TestShouldGetProperties(t *testing.T) {
 	input := []string{"User Registered // userId,email,password                     "}
-	result, err := emd.Parse(input)
+	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
@@ -37,8 +37,8 @@ func TestShouldGetProperties(t *testing.T) {
 		return
 	}
 	switch result.Lines[0].(type) {
-	case emd.Event:
-		properties := result.Lines[0].(emd.Event).Properties
+	case esl.Event:
+		properties := result.Lines[0].(esl.Event).Properties
 		if len(properties) != 3 {
 			t.Error("Unexpected number of Event.Properties")
 		}
@@ -58,7 +58,7 @@ func TestShouldGetProperties(t *testing.T) {
 
 func TestShouldGetPropertiesWithTrailingComma(t *testing.T) {
 	input := []string{"User Registered // userId,email,password,                     "}
-	result, err := emd.Parse(input)
+	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
@@ -67,8 +67,8 @@ func TestShouldGetPropertiesWithTrailingComma(t *testing.T) {
 		return
 	}
 	switch result.Lines[0].(type) {
-	case emd.Event:
-		properties := result.Lines[0].(emd.Event).Properties
+	case esl.Event:
+		properties := result.Lines[0].(esl.Event).Properties
 		if len(properties) != 3 {
 			t.Error("Unexpected number of Event.Properties")
 		}
@@ -88,7 +88,7 @@ func TestShouldGetPropertiesWithTrailingComma(t *testing.T) {
 
 func TestShouldGetEventWithoutProperties(t *testing.T) {
 	input := []string{"User Registered                    "}
-	result, err := emd.Parse(input)
+	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
@@ -97,8 +97,8 @@ func TestShouldGetEventWithoutProperties(t *testing.T) {
 		return
 	}
 	switch result.Lines[0].(type) {
-	case emd.Event:
-		if result.Lines[0].(emd.Event).Name != "User Registered" {
+	case esl.Event:
+		if result.Lines[0].(esl.Event).Name != "User Registered" {
 			t.Error("Unexpected Event.Name")
 		}
 	default:
@@ -108,7 +108,7 @@ func TestShouldGetEventWithoutProperties(t *testing.T) {
 
 func TestShouldGetEventWithoutPropertiesWithTrailingSlashes(t *testing.T) {
 	input := []string{"User Registered //  "}
-	result, err := emd.Parse(input)
+	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
@@ -117,11 +117,11 @@ func TestShouldGetEventWithoutPropertiesWithTrailingSlashes(t *testing.T) {
 		return
 	}
 	switch result.Lines[0].(type) {
-	case emd.Event:
-		if result.Lines[0].(emd.Event).Name != "User Registered" {
+	case esl.Event:
+		if result.Lines[0].(esl.Event).Name != "User Registered" {
 			t.Error("Unexpected Event.Name")
 		}
-		if len(result.Lines[0].(emd.Event).Properties) != 0 {
+		if len(result.Lines[0].(esl.Event).Properties) != 0 {
 			t.Error("Unexpected Event.Properties.")
 		}
 	default:
@@ -131,26 +131,26 @@ func TestShouldGetEventWithoutPropertiesWithTrailingSlashes(t *testing.T) {
 
 func TestShouldNotReturnEventWhenCommandGiven(t *testing.T) {
 	input := []string{"Command This->"}
-	result, err := emd.Parse(input)
+	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
 	if len(result.Lines) > 0 {
 		switch result.Lines[0].(type) {
-		case emd.Event:
+		case esl.Event:
 			t.Error("Unexpected Event.")
 		}
 	}
 }
 func TestShouldNotReturnEventWhenDocumentGiven(t *testing.T) {
 	input := []string{"A Read Model* // one,two"}
-	result, err := emd.Parse(input)
+	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
 	if len(result.Lines) > 0 {
 		switch result.Lines[0].(type) {
-		case emd.Event:
+		case esl.Event:
 			t.Error("Unexpected Event.")
 		}
 	}

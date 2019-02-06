@@ -3,9 +3,9 @@ package convert_test
 import (
 	"testing"
 
-	"github.com/Adaptech/les/pkg/convert"
-	"github.com/Adaptech/les/pkg/emd"
-	"github.com/Adaptech/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/convert"
+	"github.com/robertreppel/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/esl"
 )
 
 func TestShouldCreateCommand(t *testing.T) {
@@ -14,11 +14,11 @@ func TestShouldCreateCommand(t *testing.T) {
 		"Register-> // userId, email, password",
 		"User Registered",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -35,11 +35,11 @@ func TestCreateCommandParametersCorrect(t *testing.T) {
 		"Register-> // userId, email, password",
 		"User Registered",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -58,11 +58,11 @@ func TestShouldCreateOneCommandFor2EventPostconditions(t *testing.T) {
 		"User Registered",
 		"User Registration Confirmed",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -79,11 +79,11 @@ func TestCommandShouldHaveParameters(t *testing.T) {
 		"User Registered // userId, password",
 		"User Registration Confirmed // userId",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -120,11 +120,11 @@ func TestCommandShouldHavePostconditions(t *testing.T) {
 		"User Registered",
 		"User Registration Confirmed",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -147,11 +147,11 @@ func TestCommandMustHaveAggregateIdBasedOnStreamName(t *testing.T) {
 		"User Registered",
 		"User Registration Confirmed",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -186,11 +186,11 @@ func TestCommandMustHaveMustExistRuleForAggregateIdsOtherThanTheOneOfStreamTheCo
 		"Timesheet Created // timesheetId, userId, date",
 		"UserLookup* // userId, date",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -229,11 +229,11 @@ func TestCommandShouldNotGenerateAggregateIdIfOneAlreadyExists(t *testing.T) {
 		"Register-> // userId",
 		"User Registered",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -266,11 +266,11 @@ func TestAddingAggregateIdToCommandParametersShouldPreserveOtherParameters(t *te
 		"Register-> // name",
 		"User Registered",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -544,11 +544,11 @@ func TestParameterWithAggregatePostfixMustExistInReadmodelThatExistsAndHasKeySuc
 		"UserLookup* // userId, email",
 	}
 
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	conversionResult, err := convert.EmdToEml(markdown)
+	conversionResult, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}

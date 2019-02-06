@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/Adaptech/les/pkg/convert"
-	"github.com/Adaptech/les/pkg/emd"
-	"github.com/Adaptech/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/convert"
+	"github.com/robertreppel/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/esl"
 )
 
 func convertFileToEml(inputFile string, outputFile string) (bool, error) {
@@ -14,20 +14,20 @@ func convertFileToEml(inputFile string, outputFile string) (bool, error) {
 	if err != nil {
 		return false, fmt.Errorf("convertToEml: %v", err)
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		return false, fmt.Errorf("convertToEml: %v", err)
 	}
-	conversionResult, err := convert.EmdToEml(markdown)
+	conversionResult, err := convert.EslToEml(markdown)
 	if err != nil {
 		return false, fmt.Errorf("convertToEml: %v", err)
 	}
 
 	isValidEml := len(conversionResult.MarkdownValidationErrors) == 0
 	if !isValidEml {
-		fmt.Println("EMD Errors:")
-		for _, emdErr := range conversionResult.MarkdownValidationErrors {
-			printError(emdErr.ErrorID, emdErr.Message)
+		fmt.Println("ESL Errors:")
+		for _, eslErr := range conversionResult.MarkdownValidationErrors {
+			printError(eslErr.ErrorID, eslErr.Message)
 		}
 	}
 

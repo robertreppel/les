@@ -15,14 +15,14 @@ type validateCommand struct {
 
 func configureValidateCommand(app *kingpin.Application) {
 	c := &validateCommand{}
-	cmd := app.Command("validate", "Verify if event markdown in ./"+defaultEmdFile+" or event markup in ./"+defaultEmlFile+" is valid for building APIs.")
-	c.tail = cmd.Flag("follow", "Re-validate whenever ./"+defaultEmdFile+" or  ./"+defaultEmlFile+" are changed.").Short('f').Bool()
-	c.file = cmd.Arg("file", ".emd or .eml.yaml file. Default: "+defaultEmdFile+" or "+defaultEmlFile+".").String()
+	cmd := app.Command("validate", "Verify if event markdown in ./"+defaultEslFile+" or event markup in ./"+defaultEmlFile+" is valid for building APIs.")
+	c.tail = cmd.Flag("follow", "Re-validate whenever ./"+defaultEslFile+" or  ./"+defaultEmlFile+" are changed.").Short('f').Bool()
+	c.file = cmd.Arg("file", ".esl or .eml.yaml file. Default: "+defaultEslFile+" or "+defaultEmlFile+".").String()
 	cmd.Action(c.validate)
 }
 
 func (n *validateCommand) validate(c *kingpin.ParseContext) error {
-	inputFile := useDefaultEmdOrEmlFileIfInputFileNotSpecified(*n.file)
+	inputFile := useDefaultEslOrEmlFileIfInputFileNotSpecified(*n.file)
 	if inputFile == "" {
 		fmt.Println("No input file found. Try 'les validate --help'.")
 		return nil
@@ -36,7 +36,7 @@ func (n *validateCommand) validate(c *kingpin.ParseContext) error {
 		return nil
 	}
 
-	if !isFileValidEmdOrEml(inputFile) {
+	if !isFileValidEslOrEml(inputFile) {
 		os.Exit(-1)
 	}
 	return nil

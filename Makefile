@@ -21,8 +21,8 @@ build-les-viz:
 	&& go get \
 	&& go install
 
-.PHONY: test-all
-test-all: unit-test test-samples-are-valid test-emd-compliance test-eml-compliance
+.PHONY: test
+test: unit-test test-samples-are-valid
 	echo "COMPLIANCE TESTS PASS."
 
 .PHONY: unit-test
@@ -33,14 +33,14 @@ unit-test:
 test-eml-compliance:
 	cd cmd/compliance-test/eml \
 	&& sleep 2 \
-	&& make setup && sleep 2 && make test \
+	&& make setup && sleep 5 && make test \
 	&& make teardown
 
-.PHONY: test-emd-compliance
-test-emd-compliance:
-	cd cmd/compliance-test/emd \
+.PHONY: test-esl-compliance
+test-esl-compliance:
+	cd cmd/compliance-test/esl \
 	&& sleep 2 \
-	&& make setup && sleep 2 && make test \
+	&& make setup && sleep 5 && make test \
 	&& make teardown
 
 .PHONY: test-samples-are-valid

@@ -2,7 +2,7 @@
 
 ## 0.10.7-alpha (June 01, 2018)
 
-* Fixed https://github.com/Adaptech/les/issues/9
+* Fixed https://github.com/robertreppel/les/issues/9
 * Typo/wording fixed in les --help.
 
 ## 0.10.6-alpha (May 23, 2018)
@@ -20,7 +20,7 @@
 
 ### New Features
 
-* les-node uses newly opensourced les-node-template (https://github.com/Adaptech/les-node-template) (version 20180430-237a5d5)
+* les-node uses newly opensourced les-node-template (https://github.com/robertreppel/les-node-template) (version 20180430-237a5d5)
 
 ## 0.10.3-alpha (April 21, 2018)
 
@@ -39,11 +39,11 @@ Automated EML v0.10.x specification [compliance test suite for generated APIs](c
 
 ## 0.10.2-alpha (April 18, 2018)
 
-* Changed default EML and EMD file names so they say what's in the files.
+* Changed default EML and ESL file names so they say what's in the files.
 
 * Running les and les-node without installation, via Docker.
 
-* EMD parameter & properties validation bug fix.
+* ESL parameter & properties validation bug fix.
 
 * Automated multi-platform builds.
 

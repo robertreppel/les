@@ -3,8 +3,8 @@ package convert_test
 import (
 	"testing"
 
-	"github.com/Adaptech/les/pkg/convert"
-	"github.com/Adaptech/les/pkg/emd"
+	"github.com/robertreppel/les/pkg/convert"
+	"github.com/robertreppel/les/pkg/esl"
 )
 
 func TestShouldCreateEvents(t *testing.T) {
@@ -14,11 +14,11 @@ func TestShouldCreateEvents(t *testing.T) {
 		"Timesheet Created",
 		"Timesheet Submitted",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -56,11 +56,11 @@ func TestEventsShouldHaveCorrectNumberAndTypeOfProperties(t *testing.T) {
 		"# Timesheets",
 		"User Registered // userId, password",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -103,11 +103,11 @@ func TestEventsWithoutAggregateIdShouldHaveAggregateIdAdded(t *testing.T) {
 		"# Timesheets",
 		"User Registered // password",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -139,11 +139,11 @@ func TestShouldNotAllowOnOneWordEvents(t *testing.T) {
 		"# Timesheets",
 		"UserRegistered",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -158,11 +158,11 @@ func TestShouldStripSpacesFromEventPropertyNames(t *testing.T) {
 		"# Timesheets",
 		"User Registered // User Email",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}
@@ -184,11 +184,11 @@ func TestShouldStripSpacesFromCommandParameterNames(t *testing.T) {
 		"Register User->//User Email",
 		"User Registered // email",
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
-	markup, err := convert.EmdToEml(markdown)
+	markup, err := convert.EslToEml(markdown)
 	if err != nil {
 		panic(err)
 	}

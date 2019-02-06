@@ -1,14 +1,14 @@
-package emd
+package esl
 
 import (
 	"strings"
 )
 
-// Parse Event Markdown to Event Markup Language
-func Parse(emdInput []string) (Emd, error) {
-	eventMarkdown := Emd{}
+// Parse Event Storming Language to Event Modeling Language Language
+func Parse(eslInput []string) (Esl, error) {
+	eventMarkdown := Esl{}
 	var lineItems = []Item{}
-	for _, line := range emdInput {
+	for _, line := range eslInput {
 		if len(line) <= 2 || line[:2] == "//" {
 			continue
 		}

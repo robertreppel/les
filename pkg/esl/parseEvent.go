@@ -1,17 +1,17 @@
-package emd
+package esl
 
 import (
 	"regexp"
 	"strings"
 )
 
-func parseEvent(emdInput string, lineItems []Item) []Item {
-	if strings.Contains(emdInput, "//") {
+func parseEvent(eslInput string, lineItems []Item) []Item {
+	if strings.Contains(eslInput, "//") {
 		re, err := regexp.Compile("^(.*) *\\/\\/ *(.*)")
 		if err != nil {
 			panic(err)
 		}
-		event := re.FindAllStringSubmatch(emdInput, -1)
+		event := re.FindAllStringSubmatch(eslInput, -1)
 		if len(event) > 0 {
 			var properties []Property
 			first := event[0]
@@ -30,7 +30,7 @@ func parseEvent(emdInput string, lineItems []Item) []Item {
 
 		}
 	} else {
-		lineItems = append(lineItems, Event{Name: strings.Trim(emdInput, " ")})
+		lineItems = append(lineItems, Event{Name: strings.Trim(eslInput, " ")})
 	}
 	return lineItems
 }

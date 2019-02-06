@@ -1,5 +1,5 @@
 # TODO List
-# A reference system which exercises all available features in EMD 0.10.1-alpha.
+# A reference system which exercises all available features in ESL 0.10.1-alpha.
 
 Register-> // userId, notificationEmail
 User Registered // userId, notificationEmail

@@ -6,7 +6,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/Adaptech/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/eml"
 )
 
 // Field for domain templates

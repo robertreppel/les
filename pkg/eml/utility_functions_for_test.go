@@ -1,7 +1,7 @@
 package eml_test
 
 import (
-	"github.com/Adaptech/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/eml"
 )
 
 func hasError(errorId string, errors []eml.ValidationError) bool {

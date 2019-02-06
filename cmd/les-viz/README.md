@@ -1,10 +1,10 @@
-# les-viz: Event Markdown Vizualization (EMD -> GraphViz)
+# les-viz: Event Storming Language Vizualization (ESL -> GraphViz)
 
 ![example](consentaur-example.png)
 
 **Generates a [GraphViz](http://www.graphviz.org/) digraph for an event storming.**
 
-[What is Event Markdown?](https://docs.letseventsource.org/faq/eventmarkdown/)
+[What is Event Storming Language?](https://docs.letseventsource.org/faq/eventmarkdown/)
 
 See also: https://webeventstorming.com
 
@@ -22,7 +22,7 @@ Flags:
   --version  Show application version.
 
 Args:
-  [<file>]  Event Markdown (.emd) file
+  [<file>]  Event Storming Language (.esl) file
 
 ```
 
@@ -40,8 +40,8 @@ Generate a visual representation of an event storming:
 
 ```bash
 
-curl -L https://raw.githubusercontent.com/Adaptech/les/master/samples/consentaur/Eventstorming.emd > Eventstorming.emd \
-&& les-viz Eventstorming.emd | dot -Tpng -o Eventstorming.png \
+curl -L https://raw.githubusercontent.com/Adaptech/les/master/samples/consentaur/Eventstorming.esl > Eventstorming.esl \
+&& les-viz Eventstorming.esl | dot -Tpng -o Eventstorming.png \
 && eog Eventstorming.png
 
 ```

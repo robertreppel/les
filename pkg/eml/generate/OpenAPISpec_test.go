@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Adaptech/les/pkg/eml"
-	"github.com/Adaptech/les/pkg/eml/generate"
+	"github.com/robertreppel/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/eml/generate"
 )
 
 func TestMustHaveTitleAndDescription(t *testing.T) {

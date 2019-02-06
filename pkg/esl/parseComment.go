@@ -1,13 +1,13 @@
-package emd
+package esl
 
 import (
 	"regexp"
 	"strings"
 )
 
-func parseComment(emdInput string, lineItems []Item) []Item {
+func parseComment(eslInput string, lineItems []Item) []Item {
 	re, _ := regexp.Compile("^ *# *(.*)")
-	comment := re.FindAllStringSubmatch(emdInput, -1)
+	comment := re.FindAllStringSubmatch(eslInput, -1)
 	if len(comment) > 0 {
 		lineItems = append(lineItems, Comment{Text: strings.Trim(comment[0][1], " ")})
 	}

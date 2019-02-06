@@ -4,10 +4,10 @@ import (
 	"bytes"
 	"log"
 
-	"github.com/Adaptech/les/pkg/eml/generate/nodejs"
+	"github.com/robertreppel/les/pkg/eml/generate/nodejs"
 
 	"github.com/alecthomas/template"
-	"github.com/Adaptech/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/eml"
 )
 
 // SwaggerYML ...

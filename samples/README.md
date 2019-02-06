@@ -4,6 +4,6 @@
 
 ```bash
 cd consentaur \
-&& les convert Eventstorming.emd \
+&& les convert Eventstorming.esl \
 && les-node -b
 ```

@@ -1,17 +1,17 @@
-package emd
+package esl
 
 import (
 	"regexp"
 	"strings"
 )
 
-func parseDocument(emdInput string, lineItems []Item) []Item {
-	if strings.Contains(emdInput, "//") {
+func parseDocument(eslInput string, lineItems []Item) []Item {
+	if strings.Contains(eslInput, "//") {
 		re, err := regexp.Compile("^(.*) *\\* *\\/\\/ *(.*)")
 		if err != nil {
 			panic(err)
 		}
-		document := re.FindAllStringSubmatch(emdInput, -1)
+		document := re.FindAllStringSubmatch(eslInput, -1)
 		if len(document) > 0 {
 			var properties []Property
 			first := document[0]
@@ -28,7 +28,7 @@ func parseDocument(emdInput string, lineItems []Item) []Item {
 			return lineItems
 		}
 	} else {
-		spacesRemoved := strings.Trim(emdInput, " ")
+		spacesRemoved := strings.Trim(eslInput, " ")
 		documentName := strings.Replace(spacesRemoved, "*", "", -1)
 		lineItems = append(lineItems, Document{Name: documentName})
 	}

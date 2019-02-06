@@ -5,22 +5,22 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/Adaptech/les/pkg/emd"
-	"github.com/Adaptech/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/esl"
 )
 
-// EmdToEml converts an event markdown (emd) spec to event markup language (eml)
-// - Event Markdown is the format used on (e.g.) webeventstorming.com
-// - Event Markup is used to specify event sourced systems for the Adaptech Platform.
-func EmdToEml(markdown emd.Emd) (EmdToEmlConversion, error) {
-	result := EmdToEmlConversion{
+// EslToEml converts an event markdown (esl) spec to event markup language (eml)
+// - Event Storming Language is the format used on (e.g.) webeventstorming.com
+// - Event Modeling Language is used to specify event sourced systems for the Adaptech Platform.
+func EslToEml(markdown esl.Esl) (EslToEmlConversion, error) {
+	result := EslToEmlConversion{
 		Eml: eml.Solution{},
-		MarkdownValidationErrors: []emd.EmdValidationError{},
+		MarkdownValidationErrors: []esl.EslValidationError{},
 	}
 
 	boundedContext := getBoundedContext(markdown)
 	result.Eml.EmlVersion = "0.1-alpha"
-	result.Eml.Name = boundedContext.Name // EMD can only have one bounded context right now. Use it's name for the solution name.
+	result.Eml.Name = boundedContext.Name // ESL can only have one bounded context right now. Use it's name for the solution name.
 	contexts := []eml.BoundedContext{}
 
 	contexts = append(contexts, boundedContext)
@@ -67,29 +67,29 @@ func contains(eventID string, eventList []string) bool {
 	return hasValue
 }
 
-func getBoundedContext(markdown emd.Emd) eml.BoundedContext {
+func getBoundedContext(markdown esl.Esl) eml.BoundedContext {
 	for _, item := range markdown.Lines {
 		switch item.(type) {
-		case emd.Comment:
-			boundedContext := item.(emd.Comment).Text
+		case esl.Comment:
+			boundedContext := item.(esl.Comment).Text
 			return eml.BoundedContext{Name: boundedContext}
 		}
 	}
 	return eml.BoundedContext{Name: ""}
 }
 
-func getReadmodels(markdown emd.Emd, eventsByPropertyLookup map[string][]string, streams map[string]bool) ([]eml.Readmodel, []emd.EmdValidationError) {
-	validationErrors := []emd.EmdValidationError{}
+func getReadmodels(markdown esl.Esl, eventsByPropertyLookup map[string][]string, streams map[string]bool) ([]eml.Readmodel, []esl.EslValidationError) {
+	validationErrors := []esl.EslValidationError{}
 	models := []eml.Readmodel{}
 	for _, item := range markdown.Lines {
 		switch item.(type) {
-		case emd.Document:
-			readmodelEmd := item.(emd.Document)
+		case esl.Document:
+			readmodelEsl := item.(esl.Document)
 			readmodelEml := eml.Readmodel{}
-			readmodelEml.Readmodel.Name = strings.Replace(readmodelEmd.Name, " ", "", -1)
+			readmodelEml.Readmodel.Name = strings.Replace(readmodelEsl.Name, " ", "", -1)
 			properties := []eml.Property{}
-			for _, emdProperty := range readmodelEmd.Properties {
-				emlProperty := eml.Property{Name: strings.Replace(emdProperty.Name, " ", "", -1)}
+			for _, eslProperty := range readmodelEsl.Properties {
+				emlProperty := eml.Property{Name: strings.Replace(eslProperty.Name, " ", "", -1)}
 				properties = append(properties, emlProperty)
 			}
 			if len(properties) > 0 {
@@ -112,7 +112,7 @@ func getReadmodels(markdown emd.Emd, eventsByPropertyLookup map[string][]string,
 							subscribesTo[event] = true
 						}
 					} else {
-						validationError := emd.EmdValidationError{
+						validationError := esl.EslValidationError{
 							ErrorID: "MissingSubscribesToEventForReadmodelProperty",
 							Message: "Could not find an event to subscribe to for getting readmodel property '" + property.Name + "'",
 						}
@@ -132,23 +132,23 @@ func getReadmodels(markdown emd.Emd, eventsByPropertyLookup map[string][]string,
 	return models, validationErrors
 }
 
-func getStreams(markdown emd.Emd, result EmdToEmlConversion) EmdToEmlConversion {
-	validationErrors := []emd.EmdValidationError{}
+func getStreams(markdown esl.Esl, result EslToEmlConversion) EslToEmlConversion {
+	validationErrors := []esl.EslValidationError{}
 	foundEvents := make(map[string][]eml.Event)
 	foundCommands := make(map[string][]eml.Command)
 	var mostRecentCommand *eml.Command
 
 	for _, item := range markdown.Lines {
 		switch item.(type) {
-		case emd.Command:
-			emdCommand := item.(emd.Command)
-			commandID := strings.Replace(emdCommand.Name, " ", "", -1)
+		case esl.Command:
+			eslCommand := item.(esl.Command)
+			commandID := strings.Replace(eslCommand.Name, " ", "", -1)
 			newEmlCommand := eml.Command{}
 			newEmlCommand.Command.Name = commandID
 
 			emlParameters := []eml.Parameter{}
-			for _, emdParameter := range emdCommand.Parameters {
-				parameterNameWithoutSpaces := strings.Replace(emdParameter.Name, " ", "", -1)
+			for _, eslParameter := range eslCommand.Parameters {
+				parameterNameWithoutSpaces := strings.Replace(eslParameter.Name, " ", "", -1)
 				emlParameter := eml.Parameter{Name: parameterNameWithoutSpaces, Type: "string"}
 				emlParameters = append(emlParameters, emlParameter)
 			}
@@ -156,9 +156,9 @@ func getStreams(markdown emd.Emd, result EmdToEmlConversion) EmdToEmlConversion 
 
 			mostRecentCommand = &newEmlCommand
 
-		case emd.Event:
-			emdEvent := item.(emd.Event)
-			eventName := emdEvent.Name
+		case esl.Event:
+			eslEvent := item.(esl.Event)
+			eventName := eslEvent.Name
 			eventNameWords := strings.Split(eventName, " ")
 			if firstWordIsStreamName(eventNameWords) {
 				firstWordInEventName := eventNameWords[0]
@@ -166,10 +166,10 @@ func getStreams(markdown emd.Emd, result EmdToEmlConversion) EmdToEmlConversion 
 				newEmlEvent := eml.Event{}
 				newEmlEvent.Event.Name = strings.Replace(eventName, " ", "", -1)
 				emlProperties := []eml.Property{}
-				for _, emdProperty := range emdEvent.Properties {
-					propertyNameWithoutSpaces := strings.Replace(emdProperty.Name, " ", "", -1)
+				for _, eslProperty := range eslEvent.Properties {
+					propertyNameWithoutSpaces := strings.Replace(eslProperty.Name, " ", "", -1)
 					emlProperty := eml.Property{Name: propertyNameWithoutSpaces, Type: "string"}
-					if emdProperty.Name == "password" {
+					if eslProperty.Name == "password" {
 						emlProperty.IsHashed = true
 					}
 					emlProperties = append(emlProperties, emlProperty)
@@ -202,7 +202,7 @@ func getStreams(markdown emd.Emd, result EmdToEmlConversion) EmdToEmlConversion 
 				}
 
 			} else {
-				validationError := emd.EmdValidationError{ErrorID: "NoStreamName", Message: "'" + eventName + "': Could not determine event stream name."}
+				validationError := esl.EslValidationError{ErrorID: "NoStreamName", Message: "'" + eventName + "': Could not determine event stream name."}
 				validationErrors = append(validationErrors, validationError)
 			}
 		}
@@ -234,23 +234,23 @@ func firstWordIsStreamName(eventNameWords []string) bool {
 	return len(eventNameWords) > 1
 }
 
-func getCommandPostconditions(markdown emd.Emd) map[string][]string {
+func getCommandPostconditions(markdown esl.Esl) map[string][]string {
 	postConditions := make(map[string][]string)
 	mostRecentCommandID := ""
 	for _, item := range markdown.Lines {
 		switch item.(type) {
-		case emd.Command:
-			emdCommand := item.(emd.Command)
-			mostRecentCommandID = strings.Replace(emdCommand.Name, " ", "", -1)
+		case esl.Command:
+			eslCommand := item.(esl.Command)
+			mostRecentCommandID = strings.Replace(eslCommand.Name, " ", "", -1)
 
-		case emd.Event:
-			// If there are events to the left of the first command in the emd event storming, these
+		case esl.Event:
+			// If there are events to the left of the first command in the esl event storming, these
 			// are assumed to be external events. They are being ignored, for now. Need conventions
 			// for integration between bounded contexts later.
 			if mostRecentCommandID != "" {
 
-				emdEvent := item.(emd.Event)
-				eventName := emdEvent.Name
+				eslEvent := item.(esl.Event)
+				eventName := eslEvent.Name
 				eventNameWords := strings.Split(eventName, " ")
 				firstWordInEventName := eventNameWords[0]
 				streamName := firstWordInEventName
@@ -344,10 +344,10 @@ func ensureThatAggregateIDParameterIsRequiredField(command *eml.Command, streamN
 	return command
 }
 
-// EmdToEmlConversion result
-type EmdToEmlConversion struct {
+// EslToEmlConversion result
+type EslToEmlConversion struct {
 	Eml                      eml.Solution
-	MarkdownValidationErrors []emd.EmdValidationError
+	MarkdownValidationErrors []esl.EslValidationError
 }
 
 func firstUppercaseLetterIn(s string) int {

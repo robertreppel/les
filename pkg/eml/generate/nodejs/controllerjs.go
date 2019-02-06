@@ -6,7 +6,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/Adaptech/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/eml"
 )
 
 // ControllerJs renders a REST API controller.

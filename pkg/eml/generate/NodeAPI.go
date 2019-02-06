@@ -5,15 +5,16 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/Adaptech/les/pkg/eml"
-	"github.com/Adaptech/les/pkg/eml/generate/nodejs"
 	"io/ioutil"
 	"path"
+
+	"github.com/robertreppel/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/eml/generate/nodejs"
 )
 
 const nodeJsExt = ".js"
 
-// NodeAPI Event Markup Language to a nodejs API
+// NodeAPI Event Modeling Language Language to a nodejs API
 func NodeAPI(system eml.Solution, renderingDirectory string, infrastructureTemplateDirectory string) {
 	var nodeJsRenderingDirectory = renderingDirectory
 	var latestTemplateName, err = ioutil.ReadFile(path.Join(infrastructureTemplateDirectory, "nodejs", ".latest"))

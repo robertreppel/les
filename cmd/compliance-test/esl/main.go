@@ -1,5 +1,5 @@
 /*
-Event Markup Language Compliance Test
+Event Modeling Language Language Compliance Test
 
 	Tests whether an API created from EML by a builder such as les-node complies with the EML specification.
 

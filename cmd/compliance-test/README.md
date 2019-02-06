@@ -1,4 +1,4 @@
-# Event Markup Language Compliance Test
+# Event Modeling Language Language Compliance Test
 
 Tests whether an API created from EML by a builder such as les-node complies with the EML specification.
 
@@ -7,15 +7,15 @@ Tests whether an API created from EML by a builder such as les-node complies wit
 * Are all the business rules implemented?
 * Are the required validation errors returned when executing invalid commands?
 
-## Test EMD
+## Test ESL
 
-Tests all features which can be used frm Event Markdown
+Tests all features which can be used frm Event Storming Language
 
-```cd emd && make setup && sleep 1 && make test```
+```cd esl && make setup && sleep 1 && make test```
 
 
 ## Test EML
 
-Tests all features which are supported in Event Markup Language 0.10.1-alpha, but are not part of EMD.
+Tests all features which are supported in Event Modeling Language Language 0.10.1-alpha, but are not part of ESL.
 
 ```cd eml && make setup && sleep 1 && make test```

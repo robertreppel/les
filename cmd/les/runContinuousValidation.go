@@ -9,7 +9,7 @@ import (
 	"github.com/radovskyb/watcher"
 )
 
-func whenFileChangesThenValidate(emdFile string, folder string) {
+func whenFileChangesThenValidate(eslFile string, folder string) {
 	w := watcher.New()
 	w.FilterOps(watcher.Write)
 	w.IgnoreHiddenFiles(true)
@@ -34,9 +34,9 @@ func whenFileChangesThenValidate(emdFile string, folder string) {
 
 	// Initial validation on startup:
 	for _, f := range w.WatchedFiles() {
-		if strings.HasSuffix(f.Name(), emdFile) || strings.HasSuffix(f.Name(), defaultEmlFile) {
+		if strings.HasSuffix(f.Name(), eslFile) || strings.HasSuffix(f.Name(), defaultEmlFile) {
 			fmt.Println("Initial validation: " + f.Name())
-			isFileValidEmdOrEml(f.Name())
+			isFileValidEslOrEml(f.Name())
 		}
 	}
 
@@ -53,16 +53,16 @@ func whenFileChangesThenValidate(emdFile string, folder string) {
 
 func processEvent(event watcher.Event) {
 	if !event.IsDir() && len(event.Path) >= 4 {
-		isFileValidEmdOrEml(event.Path)
+		isFileValidEslOrEml(event.Path)
 	}
 }
 
-func isFileValidEmdOrEml(fileName string) bool {
+func isFileValidEslOrEml(fileName string) bool {
 	if len(fileName) >= 4 {
-		isValidatingEmdFile := strings.HasSuffix(fileName, ".emd")
+		isValidatingEslFile := strings.HasSuffix(fileName, ".esl")
 		isValidatingEmlFile := strings.HasSuffix(fileName, ".eml.yaml")
-		if isValidatingEmdFile {
-			isValidEmd, err := convertFileToEml(fileName, generatedEmlFile)
+		if isValidatingEslFile {
+			isValidEsl, err := convertFileToEml(fileName, generatedEmlFile)
 			if err != nil {
 				log.Panicln(err)
 			}
@@ -70,18 +70,18 @@ func isFileValidEmdOrEml(fileName string) bool {
 			if err != nil {
 				log.Panicln(err)
 			}
-			if isValidEml && isValidEmd {
+			if isValidEml && isValidEsl {
 				fmt.Println("OK")
 				return true
 			}
 			return false
 		}
 		if isValidatingEmlFile {
-			isValidEmd, err := checkIfFileContainsValidEml(fileName)
+			isValidEsl, err := checkIfFileContainsValidEml(fileName)
 			if err != nil {
 				log.Panicln(err)
 			}
-			if isValidEmd {
+			if isValidEsl {
 				fmt.Println("OK")
 				return true
 			}

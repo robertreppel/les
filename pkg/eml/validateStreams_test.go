@@ -3,7 +3,7 @@ package eml_test
 import (
 	"testing"
 
-	"github.com/Adaptech/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/eml"
 )
 
 func TestMustHaveAggregateEventStreams(t *testing.T) {

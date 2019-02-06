@@ -4,25 +4,25 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/Adaptech/les/pkg/convert"
-	"github.com/Adaptech/les/pkg/emd"
-	"github.com/Adaptech/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/convert"
+	"github.com/robertreppel/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/esl"
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 )
 
 type convertCommand struct {
-	conversionResult convert.EmdToEmlConversion
+	conversionResult convert.EslToEmlConversion
 	file             *string
 }
 
 func configureConvertCommand(app *kingpin.Application) {
 	c := &convertCommand{}
-	convert := app.Command("convert", "Convert from Event Markdown (.emd) to Event Markup (.eml.yaml).").Action(c.convert)
+	convert := app.Command("convert", "Convert from Event Storming Language (.esl) to Event Modeling Language (.eml.yaml).").Action(c.convert)
 	c.file = convert.Arg("file", ".eml.yaml file").String()
 }
 
 func (n *convertCommand) convert(c *kingpin.ParseContext) error {
-	inputFile := useDefaultEmdFileIfInputFileNotSpecified(*n.file)
+	inputFile := useDefaultEslFileIfInputFileNotSpecified(*n.file)
 	if inputFile == "" {
 		fmt.Println("No input file found. Try 'les convert --help'.")
 		return nil
@@ -32,11 +32,11 @@ func (n *convertCommand) convert(c *kingpin.ParseContext) error {
 	if err != nil {
 		return fmt.Errorf("convert command: %v", err)
 	}
-	markdown, err := emd.Parse(input)
+	markdown, err := esl.Parse(input)
 	if err != nil {
 		return fmt.Errorf("convert command: %v", err)
 	}
-	conversionResult, err := convert.EmdToEml(markdown)
+	conversionResult, err := convert.EslToEml(markdown)
 	if err != nil {
 		return fmt.Errorf("convert command: %v", err)
 	}

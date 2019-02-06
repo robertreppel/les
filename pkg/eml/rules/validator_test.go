@@ -3,8 +3,8 @@ package rules_test
 import (
 	"testing"
 
-	"github.com/Adaptech/les/pkg/eml"
-	"github.com/Adaptech/les/pkg/eml/rules"
+	"github.com/robertreppel/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/eml/rules"
 )
 
 func Test_should_recognize_valid_mustexistin_rule(t *testing.T) {

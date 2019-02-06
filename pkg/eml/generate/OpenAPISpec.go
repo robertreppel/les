@@ -5,11 +5,11 @@ import (
 	"log"
 	"path/filepath"
 
-	"github.com/Adaptech/les/pkg/eml"
-	"github.com/Adaptech/les/pkg/eml/generate/openapi"
+	"github.com/robertreppel/les/pkg/eml"
+	"github.com/robertreppel/les/pkg/eml/generate/openapi"
 )
 
-// OpenAPISpec - Event Markup Language to Open API 3.0 (a.k.a. Swagger)
+// OpenAPISpec - Event Modeling Language Language to Open API 3.0 (a.k.a. Swagger)
 func OpenAPISpec(system eml.Solution) string {
 	swaggerYaml := openapi.SwaggerYML(system)
 	return swaggerYaml

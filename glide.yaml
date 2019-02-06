@@ -1,4 +1,4 @@
-package: github.com/Adaptech/les
+package: github.com/robertreppel/les
 import:
 - package: gopkg.in/alecthomas/kingpin.v2
 - package: gopkg.in/yaml.v2

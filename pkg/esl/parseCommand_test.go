@@ -1,14 +1,14 @@
-package emd_test
+package esl_test
 
 import (
 	"testing"
 
-	"github.com/Adaptech/les/pkg/emd"
+	"github.com/robertreppel/les/pkg/esl"
 )
 
 func TestShouldGetCommandWithParameters(t *testing.T) {
 	input := []string{"  Validate Registration  -> // userId                     "}
-	result, err := emd.Parse(input)
+	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
@@ -17,8 +17,8 @@ func TestShouldGetCommandWithParameters(t *testing.T) {
 		return
 	}
 	switch result.Lines[0].(type) {
-	case emd.Command:
-		if result.Lines[0].(emd.Command).Name != "Validate Registration" {
+	case esl.Command:
+		if result.Lines[0].(esl.Command).Name != "Validate Registration" {
 			t.Error("Unexpected Command.Name")
 		}
 	default:
@@ -28,7 +28,7 @@ func TestShouldGetCommandWithParameters(t *testing.T) {
 
 func Test_should_get_command_with_parameters_without_slashes(t *testing.T) {
 	input := []string{"  Validate Registration  -> userId                     "}
-	result, err := emd.Parse(input)
+	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
@@ -37,8 +37,8 @@ func Test_should_get_command_with_parameters_without_slashes(t *testing.T) {
 		return
 	}
 	switch result.Lines[0].(type) {
-	case emd.Command:
-		if result.Lines[0].(emd.Command).Name != "Validate Registration" {
+	case esl.Command:
+		if result.Lines[0].(esl.Command).Name != "Validate Registration" {
 			t.Log(result)
 			t.Error("Unexpected Command.Name")
 		}
@@ -49,7 +49,7 @@ func Test_should_get_command_with_parameters_without_slashes(t *testing.T) {
 
 func TestShouldFindCommandParameters(t *testing.T) {
 	input := []string{"Validate->// userId  ,  "}
-	result, err := emd.Parse(input)
+	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
@@ -62,8 +62,8 @@ func TestShouldFindCommandParameters(t *testing.T) {
 		return
 	}
 	switch result.Lines[0].(type) {
-	case emd.Command:
-		parameters := result.Lines[0].(emd.Command).Parameters
+	case esl.Command:
+		parameters := result.Lines[0].(esl.Command).Parameters
 		if len(parameters) != 1 {
 			t.Log(parameters)
 			t.Error("Unexpected number of command.Parameters")
@@ -78,7 +78,7 @@ func TestShouldFindCommandParameters(t *testing.T) {
 
 func TestShouldGetCommandWithoutProperties(t *testing.T) {
 	input := []string{"Register->                   "}
-	result, err := emd.Parse(input)
+	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
@@ -87,8 +87,8 @@ func TestShouldGetCommandWithoutProperties(t *testing.T) {
 		return
 	}
 	switch result.Lines[0].(type) {
-	case emd.Command:
-		if result.Lines[0].(emd.Command).Name != "Register" {
+	case esl.Command:
+		if result.Lines[0].(esl.Command).Name != "Register" {
 			t.Error("Unexpected Command.Name")
 		}
 	default:
@@ -98,7 +98,7 @@ func TestShouldGetCommandWithoutProperties(t *testing.T) {
 
 func TestShouldGetCommandWithoutPropertiesWithTrailingSlashes(t *testing.T) {
 	input := []string{"Register->//  "}
-	result, err := emd.Parse(input)
+	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
 	}
@@ -107,8 +107,8 @@ func TestShouldGetCommandWithoutPropertiesWithTrailingSlashes(t *testing.T) {
 		return
 	}
 	switch result.Lines[0].(type) {
-	case emd.Command:
-		if result.Lines[0].(emd.Command).Name != "Register" {
+	case esl.Command:
+		if result.Lines[0].(esl.Command).Name != "Register" {
 			t.Error("Unexpected Command.Name")
 		}
 	default:
