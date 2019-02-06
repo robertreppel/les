@@ -44,13 +44,13 @@ func (n *convertCommand) convert(c *kingpin.ParseContext) error {
 	for _, markdownValidationError := range conversionResult.MarkdownValidationErrors {
 		printError(markdownValidationError.ErrorID, markdownValidationError.Message)
 	}
-	for _, conversionError := range conversionResult.Eml.Errors {
+	for _, conversionError := range conversionResult.Esl.Errors {
 		printError(conversionError.ErrorID, conversionError.Message)
 	}
 
-	if len(conversionResult.Eml.Errors) == 0 {
+	if len(conversionResult.Esl.Errors) == 0 {
 		n.conversionResult = conversionResult
-		yaml, err := eml.ToYaml(n.conversionResult.Eml)
+		yaml, err := eml.ToYaml(n.conversionResult.Esl)
 		if err != nil {
 			return fmt.Errorf("convert yaml command: %v", err)
 		}

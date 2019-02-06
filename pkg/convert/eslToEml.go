@@ -14,17 +14,17 @@ import (
 // - Event Modeling Language is used to specify event sourced systems for the Adaptech Platform.
 func EslToEml(markdown esl.Esl) (EslToEmlConversion, error) {
 	result := EslToEmlConversion{
-		Eml: eml.Solution{},
+		Esl: eml.Solution{},
 		MarkdownValidationErrors: []esl.EslValidationError{},
 	}
 
 	boundedContext := getBoundedContext(markdown)
-	result.Eml.EmlVersion = "0.1-alpha"
-	result.Eml.Name = boundedContext.Name // ESL can only have one bounded context right now. Use it's name for the solution name.
+	result.Esl.EmlVersion = "0.1-alpha"
+	result.Esl.Name = boundedContext.Name // ESL can only have one bounded context right now. Use it's name for the solution name.
 	contexts := []eml.BoundedContext{}
 
 	contexts = append(contexts, boundedContext)
-	result.Eml.Contexts = contexts
+	result.Esl.Contexts = contexts
 
 	result = getStreams(markdown, result)
 
@@ -33,7 +33,7 @@ func EslToEml(markdown esl.Esl) (EslToEmlConversion, error) {
 	// All events which have a property needed in the read model are going to be subscribed to.
 	streamIDs := make(map[string]bool)
 	eventsByPropertyLookup := make(map[string][]string)
-	for _, context := range result.Eml.Contexts {
+	for _, context := range result.Esl.Contexts {
 		for _, stream := range context.Streams {
 			streamIDs[strings.ToLower(stream.Name+"id")] = true
 			for _, event := range stream.Events {
@@ -51,9 +51,9 @@ func EslToEml(markdown esl.Esl) (EslToEmlConversion, error) {
 		result.MarkdownValidationErrors = append(result.MarkdownValidationErrors, eachError)
 	}
 
-	result.Eml.Contexts[0].Readmodels = readmodels
+	result.Esl.Contexts[0].Readmodels = readmodels
 
-	result.Eml.Validate()
+	result.Esl.Validate()
 	return result, nil
 }
 
@@ -93,7 +93,7 @@ func getReadmodels(markdown esl.Esl, eventsByPropertyLookup map[string][]string,
 				properties = append(properties, emlProperty)
 			}
 			if len(properties) > 0 {
-				// The first property in the EML document is assumed to be the key.
+				// The first property in the ESL document is assumed to be the key.
 				// e.g. 'User List* // userId, name, email'
 				// results in readmodel key = userId
 				//Ensures consistent casing for stream Ids: e.g. TimesheetHoursId is represented as "timesheethoursId".
@@ -225,7 +225,7 @@ func getStreams(markdown esl.Esl, result EslToEmlConversion) EslToEmlConversion 
 		}
 		streams = append(streams, stream)
 	}
-	result.Eml.Contexts[0].Streams = streams
+	result.Esl.Contexts[0].Streams = streams
 	result.MarkdownValidationErrors = validationErrors
 	return result
 }
@@ -346,7 +346,7 @@ func ensureThatAggregateIDParameterIsRequiredField(command *eml.Command, streamN
 
 // EslToEmlConversion result
 type EslToEmlConversion struct {
-	Eml                      eml.Solution
+	Esl                      eml.Solution
 	MarkdownValidationErrors []esl.EslValidationError
 }
 

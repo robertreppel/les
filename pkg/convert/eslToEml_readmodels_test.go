@@ -24,9 +24,9 @@ func Test_should_create_readmodel(t *testing.T) {
 		panic(err)
 	}
 
-	context := conversionResult.Eml.Contexts[0]
-	if len(conversionResult.Eml.Errors) > 0 {
-		t.Error("unexpected EML validation error")
+	context := conversionResult.Esl.Contexts[0]
+	if len(conversionResult.Esl.Errors) > 0 {
+		t.Error("unexpected ESL validation error")
 	}
 	if len(conversionResult.MarkdownValidationErrors) > 0 {
 		t.Error("unexpected ESL validation error")
@@ -57,12 +57,12 @@ func TestShouldFailValidationIfNoReadmodelKeyPresent(t *testing.T) {
 		panic(err)
 	}
 
-	context := markup.Eml.Contexts[0]
+	context := markup.Esl.Contexts[0]
 
 	if len(context.Readmodels) != 1 {
 		t.Error("expected different no of readmodels.")
 	}
-	if !hasError("MissingReadmodelKey", markup.Eml.Errors) {
+	if !hasError("MissingReadmodelKey", markup.Esl.Errors) {
 		t.Error("expected error")
 	}
 }
@@ -85,9 +85,9 @@ func TestReadmodelShouldHaveSubscribesToEvents(t *testing.T) {
 		panic(err)
 	}
 
-	context := markup.Eml.Contexts[0]
+	context := markup.Esl.Contexts[0]
 
-	if len(markup.Eml.Errors) != 0 || len(markup.MarkdownValidationErrors) != 0 {
+	if len(markup.Esl.Errors) != 0 || len(markup.MarkdownValidationErrors) != 0 {
 		t.Error("expected no eml or esl validation errors")
 	}
 
@@ -136,9 +136,9 @@ func TestReadmodelShouldNotSubscribeToUnneededEvents(t *testing.T) {
 		panic(err)
 	}
 
-	context := markup.Eml.Contexts[0]
+	context := markup.Esl.Contexts[0]
 
-	if len(markup.Eml.Errors) != 0 || len(markup.MarkdownValidationErrors) != 0 {
+	if len(markup.Esl.Errors) != 0 || len(markup.MarkdownValidationErrors) != 0 {
 		t.Error("expected no eml or esl validation errors")
 	}
 
@@ -174,9 +174,9 @@ func TestReadmodelShouldNotSubscribeToEventsDueToStreamIdFields(t *testing.T) {
 		panic(err)
 	}
 
-	context := markup.Eml.Contexts[0]
+	context := markup.Esl.Contexts[0]
 
-	if len(markup.Eml.Errors) != 0 || len(markup.MarkdownValidationErrors) != 0 {
+	if len(markup.Esl.Errors) != 0 || len(markup.MarkdownValidationErrors) != 0 {
 		t.Error("expected no eml or esl validation errors")
 	}
 
@@ -211,9 +211,9 @@ func TestReadmodelShouldHaveMissingKeyValidationErrorIfThereIsNoPropertyAfterDou
 		panic(err)
 	}
 
-	context := markup.Eml.Contexts[0]
+	context := markup.Esl.Contexts[0]
 
-	if len(markup.Eml.Errors) != 2 || len(markup.MarkdownValidationErrors) != 0 {
+	if len(markup.Esl.Errors) != 2 || len(markup.MarkdownValidationErrors) != 0 {
 		t.Error("expected different numbers of eml and esl validation errors")
 	}
 
@@ -221,10 +221,10 @@ func TestReadmodelShouldHaveMissingKeyValidationErrorIfThereIsNoPropertyAfterDou
 	if readmodel.Readmodel.Key != "" {
 		t.Error("Expected a read model without a key (because no parameters were specified).")
 	}
-	if !hasError("MissingReadmodelKey", markup.Eml.Errors) {
+	if !hasError("MissingReadmodelKey", markup.Esl.Errors) {
 		t.Error("expected error")
 	}
-	if !hasError("MissingReadmodelSubscribesToEvent", markup.Eml.Errors) {
+	if !hasError("MissingReadmodelSubscribesToEvent", markup.Esl.Errors) {
 		t.Error("expected error")
 	}
 }

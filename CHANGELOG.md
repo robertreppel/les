@@ -31,7 +31,7 @@ Command preconditions: Do not execute the command if the precondition isn't met:
 * "UserRegistered MustHaveHappened"
 * "UserDeleted MustNotHaveHappened"
 
-Automated EML v0.10.x specification [compliance test suite for generated APIs](cmd/eml-compliance-test/README.md) to verify that command validation rules and read models behave as expected.
+Automated ESL v0.10.x specification [compliance test suite for generated APIs](cmd/eml-compliance-test/README.md) to verify that command validation rules and read models behave as expected.
 
 ### Bug Fixes
 
@@ -39,7 +39,7 @@ Automated EML v0.10.x specification [compliance test suite for generated APIs](c
 
 ## 0.10.2-alpha (April 18, 2018)
 
-* Changed default EML and ESL file names so they say what's in the files.
+* Changed default ESL and ESL file names so they say what's in the files.
 
 * Running les and les-node without installation, via Docker.
 

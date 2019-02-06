@@ -31,7 +31,7 @@ func convertFileToEml(inputFile string, outputFile string) (bool, error) {
 		}
 	}
 
-	markup := conversionResult.Eml
+	markup := conversionResult.Esl
 	yaml, err := eml.ToYaml(markup)
 	if err != nil {
 		log.Panicf("convertFileToEml: %v", err)

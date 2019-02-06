@@ -23,7 +23,7 @@ func TestShouldCreateEvents(t *testing.T) {
 		panic(err)
 	}
 
-	streams := markup.Eml.Contexts[0].Streams
+	streams := markup.Esl.Contexts[0].Streams
 	hasUserAggregate := false
 	hasTimesheetAggregate := false
 	for _, stream := range streams {
@@ -65,7 +65,7 @@ func TestEventsShouldHaveCorrectNumberAndTypeOfProperties(t *testing.T) {
 		panic(err)
 	}
 
-	streams := markup.Eml.Contexts[0].Streams
+	streams := markup.Esl.Contexts[0].Streams
 	if len(streams[0].Events) != 1 {
 		t.Error("expected different no of User events.")
 	} else {
@@ -112,7 +112,7 @@ func TestEventsWithoutAggregateIdShouldHaveAggregateIdAdded(t *testing.T) {
 		panic(err)
 	}
 
-	streams := markup.Eml.Contexts[0].Streams
+	streams := markup.Esl.Contexts[0].Streams
 	if len(streams[0].Events) != 1 {
 		t.Error("expected different no of User events.")
 	} else {
@@ -171,7 +171,7 @@ func TestShouldStripSpacesFromEventPropertyNames(t *testing.T) {
 		t.Error("expected no validation error")
 	}
 
-	propertyName := markup.Eml.Contexts[0].Streams[0].Events[0].Event.Properties[0].Name
+	propertyName := markup.Esl.Contexts[0].Streams[0].Events[0].Event.Properties[0].Name
 
 	if propertyName != "UserEmail" {
 		t.Error("expected property name to have no spaces.")
@@ -197,7 +197,7 @@ func TestShouldStripSpacesFromCommandParameterNames(t *testing.T) {
 		t.Error("expected no validation error")
 	}
 
-	parameterName := markup.Eml.Contexts[0].Streams[0].Commands[0].Command.Parameters[0].Name
+	parameterName := markup.Esl.Contexts[0].Streams[0].Commands[0].Command.Parameters[0].Name
 
 	if parameterName != "UserEmail" {
 		t.Error("expected command parameter name to have no spaces.")

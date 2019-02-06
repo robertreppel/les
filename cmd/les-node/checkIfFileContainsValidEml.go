@@ -16,7 +16,7 @@ func checkIfFileContainsValidEml(inputFile string) (bool, error) {
 	markup.Validate()
 	isValidEml := len(markup.Errors) == 0
 	if !isValidEml {
-		fmt.Println("EML Errors:")
+		fmt.Println("ESL Errors:")
 		for _, validationError := range markup.Errors {
 			printEmlError(validationError)
 		}

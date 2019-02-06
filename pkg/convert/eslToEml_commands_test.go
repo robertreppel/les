@@ -23,7 +23,7 @@ func TestShouldCreateCommand(t *testing.T) {
 		panic(err)
 	}
 
-	streams := markup.Eml.Contexts[0].Streams
+	streams := markup.Esl.Contexts[0].Streams
 	if len(streams[0].Commands) != 1 {
 		t.Error("expected different no of User commands.")
 	}
@@ -44,7 +44,7 @@ func TestCreateCommandParametersCorrect(t *testing.T) {
 		panic(err)
 	}
 
-	streams := markup.Eml.Contexts[0].Streams
+	streams := markup.Esl.Contexts[0].Streams
 	userID := streams[0].Commands[0].Command.Parameters[0].Name
 	if userID != "userId" {
 		t.Error("Expected command name to be 'userId'). Found", userID)
@@ -67,7 +67,7 @@ func TestShouldCreateOneCommandFor2EventPostconditions(t *testing.T) {
 		panic(err)
 	}
 
-	streams := markup.Eml.Contexts[0].Streams
+	streams := markup.Esl.Contexts[0].Streams
 	if len(streams[0].Commands) != 1 {
 		t.Error("expected different no of User commands.")
 	}
@@ -88,7 +88,7 @@ func TestCommandShouldHaveParameters(t *testing.T) {
 		panic(err)
 	}
 
-	streams := markup.Eml.Contexts[0].Streams
+	streams := markup.Esl.Contexts[0].Streams
 	if len(streams[0].Commands) != 1 {
 		t.Error("expected different no of User commands.")
 	} else {
@@ -129,7 +129,7 @@ func TestCommandShouldHavePostconditions(t *testing.T) {
 		panic(err)
 	}
 
-	streams := markup.Eml.Contexts[0].Streams
+	streams := markup.Esl.Contexts[0].Streams
 	if len(streams[0].Commands) != 1 {
 		t.Error("expected different no of User commands.")
 	} else {
@@ -156,7 +156,7 @@ func TestCommandMustHaveAggregateIdBasedOnStreamName(t *testing.T) {
 		panic(err)
 	}
 
-	streams := markup.Eml.Contexts[0].Streams
+	streams := markup.Esl.Contexts[0].Streams
 	if len(streams[0].Commands) != 1 {
 		t.Error("expected different no of User commands.")
 	} else {
@@ -195,7 +195,7 @@ func TestCommandMustHaveMustExistRuleForAggregateIdsOtherThanTheOneOfStreamTheCo
 		panic(err)
 	}
 
-	streams := markup.Eml.Contexts[0].Streams
+	streams := markup.Esl.Contexts[0].Streams
 	if len(streams[0].Commands) != 1 {
 		t.Error("expected different no of User commands.")
 	} else {
@@ -238,7 +238,7 @@ func TestCommandShouldNotGenerateAggregateIdIfOneAlreadyExists(t *testing.T) {
 		panic(err)
 	}
 
-	streams := markup.Eml.Contexts[0].Streams
+	streams := markup.Esl.Contexts[0].Streams
 	if len(streams[0].Commands) != 1 {
 		t.Error("expected different no of User commands.")
 	} else {
@@ -275,7 +275,7 @@ func TestAddingAggregateIdToCommandParametersShouldPreserveOtherParameters(t *te
 		panic(err)
 	}
 
-	streams := markup.Eml.Contexts[0].Streams
+	streams := markup.Esl.Contexts[0].Streams
 	if len(streams[0].Commands) != 1 {
 		t.Error("expected different no of User commands.")
 	} else {
@@ -553,7 +553,7 @@ func TestParameterWithAggregatePostfixMustExistInReadmodelThatExistsAndHasKeySuc
 		panic(err)
 	}
 
-	sut := conversionResult.Eml
+	sut := conversionResult.Esl
 	sut.Validate()
 	if len(sut.Errors) > 0 {
 		t.Error("Expected no errors.")

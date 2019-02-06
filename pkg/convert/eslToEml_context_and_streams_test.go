@@ -18,12 +18,12 @@ func TestShouldCreateBoundedContextFromFirstComment(t *testing.T) {
 		panic(err)
 	}
 
-	if len(markup.Eml.Contexts) != 1 {
+	if len(markup.Esl.Contexts) != 1 {
 		t.Error("expected different number of contexts")
 		return
 	}
-	if markup.Eml.Contexts[0].Name != "Timesheets" {
-		t.Error("expected different markup.Eml.Contexts.Name")
+	if markup.Esl.Contexts[0].Name != "Timesheets" {
+		t.Error("expected different markup.Esl.Contexts.Name")
 	}
 }
 
@@ -43,7 +43,7 @@ func TestShouldCreateStreamsFromFirstWordsInEventNames(t *testing.T) {
 		panic(err)
 	}
 
-	streams := markup.Eml.Contexts[0].Streams
+	streams := markup.Esl.Contexts[0].Streams
 
 	hasUserAggregate := false
 	hasTimesheetAggregate := false
@@ -82,7 +82,7 @@ func TestShouldNotCreateStreamsFromOneWordEvents(t *testing.T) {
 		panic(err)
 	}
 
-	streams := markup.Eml.Contexts[0].Streams
+	streams := markup.Esl.Contexts[0].Streams
 	if len(streams) != 0 {
 		t.Error("expected different number of Contexts.Streams")
 	}

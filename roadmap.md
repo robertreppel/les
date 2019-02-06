@@ -2,7 +2,7 @@
 
 __Features & Fixes__
 
-## 0.10.8-alpha (probably)
+## 0.2.0-alpha
 
 This version relaxes some validation rules for Event Storming Language which imposed unnecessary limits on what kind of event stormings can be used as input for code generation:
 

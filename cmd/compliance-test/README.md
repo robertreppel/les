@@ -1,6 +1,6 @@
 # Event Modeling Language Language Compliance Test
 
-Tests whether an API created from EML by a builder such as les-node complies with the EML specification.
+Tests whether an API created from ESL by a builder such as les-node complies with the ESL specification.
 
 * Are all the command processor end points working?
 * Are the read models working?
@@ -14,7 +14,7 @@ Tests all features which can be used frm Event Storming Language
 ```cd esl && make setup && sleep 1 && make test```
 
 
-## Test EML
+## Test ESL
 
 Tests all features which are supported in Event Modeling Language Language 0.10.1-alpha, but are not part of ESL.
 

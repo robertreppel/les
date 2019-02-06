@@ -1,24 +1,7 @@
-# LES
+# Event Modeling Language (EML)
 
-[![Join the chat at https://gitter.im/Adaptech/les](https://badges.gitter.im/Adaptech/les.svg)](https://gitter.im/Adaptech/les?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-### "Let's Event Source"
-
-**Event sourcing and CQRS/ES based "microservices" are increasingly seen as a nice way to build cohesive, loosely coupled systems with good transactional integrity. There is a knack to building software that way, so although the resulting systems tend to be much simpler and easier to understand than traditional (e.g.) object oriented implementations, there is a bit of a learning curve.**
-
-LES attempts to address this in three ways:
-
-1. **Fast microservice prototyping:** Go directly from an [event storming](http://ziobrando.blogspot.ca/2013/11/introducing-event-storming.html) to a working event sourced API.
-
-2. **"Architect in a box":** ```les validate``` assesses whether a prototype will result in a "good" event sourced microservice - cohesive, loosely-coupled, transactionally consistent. Then ```les-node -b``` builds a deployment-ready NodeJS API with plenty of guide fences and best practices in place as developers go forward customizing it. If you have your own coding standards or don't like NodeJS, implement your own in a language of your choice.
-
-3. **"Citizen IT Developer".** One of the goals of the LES project is to enable "business coders", "power users" and entrepreneurs with little technical knowledge to build highly scalable event sourced microservices from scratch, basically "I've made this API for my startup - could you build me an app for that?"
-
-LES is currently in alpha. We have started using 1. and 2. in Real Life projects. But no.3 (Citizen IT Developer) especially is still quite experimental, with a good number of features missing.
-
-See also: [LES FAQ](https://docs.letseventsource.org/faq/)
-
-![LESTER Pipeline](https://github.com/robertreppel/les/blob/master/LESTER-stack-diagram.png)
+![ESL/EML Pipeline](https://github.com/robertreppel/les/blob/master/LESTER-stack-diagram.png)
 
 ## Getting Started
 
@@ -45,13 +28,13 @@ make install
 
 **Step 1:**
 
-Create an [Event Storming Language](https://webeventstorming.com) file. Event Storming Language (ESL) is a simple language used to describe an [event storming](https://ziobrando.blogspot.ca/2013/11/introducing-event-storming.html):
+Create an Event Storming Language file. Event Storming Language (ESL) is a simple language used to describe an [event storming](https://ziobrando.blogspot.ca/2013/11/introducing-event-storming.html):
 
 ```bash
-# TODO List
-Add Item -> // description, dueDate
-Todo Added // description, dueDate
-TODO List* // todoId, description, dueDate
+/// TODO List
+Add Item -> : description, dueDate
+Todo Added : description, dueDate
+TODO List* : todoId, description, dueDate
 ```
 Save it to ```Eventstorming.esl```. 
 
@@ -71,40 +54,13 @@ docker run -v $(pwd):/les les convert && docker run -v $(pwd):/les les-node -b &
 
 **Step 3:**
 
-There is no step 3.
+Try it:
 
 * Add some items to the TODO list: http://localhost:3001/api-docs (Swagger/OpenAPI)
 * View the items: http://localhost:3001/api/v1/r/TODOList
 * Look at the "TodoAdded" events in the Eventstore DB: http://localhost:2113 (username 'admin', password 'changeit')
 * Check out the source code for the "TODO List" system: ```./api```
-
-## What next ...
-
-* Tutorial & FAQ: https://docs.letseventsource.org
-
-* A collection of Event Storming Language (ESL) examples: https://github.com/robertreppel/les/tree/master/samples
-
-* Learn Event Storming: http://eventstorming.com
-
-* https://gitter.im/Adaptech/les 
-
-## IDE Integrations & Tools
-
-* Event Storming Language [vscode extension](https://github.com/markgukov/vscode-event-markdown)
-
-## Known UX Impacting Issues
-
-The issues below have been known to mystify ESL users:
-
-#### Sporadic Race condition when doing ```cd api && npm install && docker-compose up -d```
-
-API doesn't start because Eventstore isn't up yet. (Workaround: ```docker-compose restart api```)
-
-https://github.com/robertreppel/les/issues/11
-
-#### Need to have at least one read model parameter which is not an aggregate ID
-
-https://github.com/robertreppel/les/issues/10
+* For more ESL examples, check out the "samples" folder.
 
 ## Running The Tests
 

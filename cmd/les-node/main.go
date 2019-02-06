@@ -11,7 +11,7 @@ import (
 const defaultEmlFile = "Eventstorming.eml.yaml"
 
 var (
-	buildAPI  = kingpin.Flag("build", "Build a NodeJS API from EML.").Short('b').Bool()
+	buildAPI  = kingpin.Flag("build", "Build a NodeJS API from ESL.").Short('b').Bool()
 	inputFile = kingpin.Arg("file", ".eml.yaml file. Default: "+defaultEmlFile).String()
 )
 
