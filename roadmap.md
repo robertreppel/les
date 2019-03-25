@@ -8,4 +8,5 @@ This version relaxes some validation rules for Event Storming Language which imp
 
 * In a real life event storming, an event can occur more than once in a workflow. This is now valid ESL.
 * In real life, a command can result in more than one event. And so it is now in ESL.
-* Read models can have derived or renamed properties which do not correspond to properties of events.
+* Read models can have derived or renamed properties which do not correspond to properties of events. It should be possible, once such properties have been identified, to tell them in EML which ones of the event-derived properties are the input for such determinations or calculations. E.g. "totalRevenue" would be identified as being based on the "amount" fields of the "Sale Made" and "Sale Canceled" events. 
+
