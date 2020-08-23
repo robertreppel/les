@@ -1,0 +1,28 @@
+/// Register & log in
+
+Register-> email=clara@starkindustries.net, password, retypedPassword
+User Registered : userId, email=tony@starkindustries.net, role=admin
+User Authenticated: userId
+
+/// Invite new team members
+
+Invite Team Member-> adminUserId, emails=tony@starkindustries.net  pepper@starkindustries.net
+Team Created : teamId, adminUserId
+// After registering, Clara invites Tony and Pepper on her team. 
+
+Team Member Invited : email=tony@starkindustries.net, invitationId, teamId
+Team Member Invited : email=pepper@starkindustries.net, invitationId, teamId
+// Email is sent to invitees, with a link to the invitationId. 
+Outstanding Invitations* : invitationId, teamId, email
+
+/// Accept invitation
+
+Register-> email, password, retypedPassword
+User Registered : userId, email=tony@starkindustries.net, role=member
+User Authenticated: userId
+
+// Tony accepts Clara's team invitation, kicking off the "Accept Invitation" workflow by clicking the invitation link in the invitation email.
+Accept Invitation-> userId, invitationId
+Team Invitation Accepted : userId, teamId
+Team* : teamId, userId, email=tony@starkindustries.net
+

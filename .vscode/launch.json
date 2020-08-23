@@ -2,6 +2,14 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Launch Package",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/cmd/les",
+            "args": ["validate", "../../samples/membership/Eventstorming.esl"]
+        },
+        {
             "type": "node",
             "request": "attach",
             "name": "Attach by Process ID",

@@ -14,6 +14,7 @@ func convertFileToEml(inputFile string, outputFile string) (bool, error) {
 	if err != nil {
 		return false, fmt.Errorf("convertToEml: %v", err)
 	}
+
 	markdown, err := esl.Parse(input)
 	if err != nil {
 		return false, fmt.Errorf("convertToEml: %v", err)

@@ -1,0 +1,293 @@
+EmlVersion: 0.1-alpha
+Solution: Register & log in
+Contexts:
+- Name: Register & log in
+  Streams:
+  - Stream: User
+    Commands:
+    - Command:
+        Name: Register
+        Parameters:
+        - Name: email=clara@starkindustries.net
+          Type: string
+          Rules: []
+        - Name: password
+          Type: string
+          Rules: []
+        - Name: retypedPassword
+          Type: string
+          Rules: []
+        - Name: userId
+          Type: string
+          Rules:
+          - IsRequired
+        Preconditions: []
+        Postconditions:
+        - UserRegistered
+        - UserAuthenticated
+        - UserRegistered
+        - UserAuthenticated
+    - Command:
+        Name: Register
+        Parameters:
+        - Name: email
+          Type: string
+          Rules: []
+        - Name: password
+          Type: string
+          Rules: []
+        - Name: retypedPassword
+          Type: string
+          Rules: []
+        - Name: userId
+          Type: string
+          Rules:
+          - IsRequired
+        Preconditions: []
+        Postconditions:
+        - UserRegistered
+        - UserAuthenticated
+        - UserRegistered
+        - UserAuthenticated
+    Events:
+    - Event:
+        Name: UserRegistered
+        Properties:
+        - Name: userId
+          Type: string
+        - Name: email=tony@starkindustries.net
+          Type: string
+        - Name: role=admin
+          Type: string
+    - Event:
+        Name: UserAuthenticated
+        Properties:
+        - Name: userId
+          Type: string
+    - Event:
+        Name: UserRegistered
+        Properties:
+        - Name: userId
+          Type: string
+        - Name: email=tony@starkindustries.net
+          Type: string
+        - Name: role=member
+          Type: string
+    - Event:
+        Name: UserAuthenticated
+        Properties:
+        - Name: userId
+          Type: string
+  - Stream: Team
+    Commands:
+    - Command:
+        Name: InviteTeamMember
+        Parameters:
+        - Name: adminUserId
+          Type: string
+          Rules:
+          - MustExistIn UserLookup
+        - Name: emails=tony@starkindustries.netpepper@starkindustries.net
+          Type: string
+          Rules: []
+        - Name: teamId
+          Type: string
+          Rules:
+          - IsRequired
+        Preconditions: []
+        Postconditions:
+        - TeamCreated
+        - TeamMemberInvited
+        - TeamMemberInvited
+    - Command:
+        Name: AcceptInvitation
+        Parameters:
+        - Name: userId
+          Type: string
+          Rules:
+          - MustExistIn UserLookup
+        - Name: invitationId
+          Type: string
+          Rules:
+          - MustExistIn InvitationLookup
+        - Name: teamId
+          Type: string
+          Rules:
+          - IsRequired
+        Preconditions: []
+        Postconditions:
+        - TeamInvitationAccepted
+    Events:
+    - Event:
+        Name: TeamCreated
+        Properties:
+        - Name: teamId
+          Type: string
+        - Name: adminUserId
+          Type: string
+    - Event:
+        Name: TeamMemberInvited
+        Properties:
+        - Name: email=tony@starkindustries.net
+          Type: string
+        - Name: invitationId
+          Type: string
+        - Name: teamId
+          Type: string
+    - Event:
+        Name: TeamMemberInvited
+        Properties:
+        - Name: email=pepper@starkindustries.net
+          Type: string
+        - Name: invitationId
+          Type: string
+        - Name: teamId
+          Type: string
+    - Event:
+        Name: TeamInvitationAccepted
+        Properties:
+        - Name: userId
+          Type: string
+        - Name: teamId
+          Type: string
+  Readmodels:
+  - Readmodel:
+      Name: OutstandingInvitations
+      Key: invitationId
+      SubscribesTo:
+      - TeamMemberInvited
+  - Readmodel:
+      Name: Team
+      Key: teamId
+      SubscribesTo:
+      - UserRegistered
+      - TeamMemberInvited
+Errors:
+- errorid: NamesMustBeUnique
+  context: ""
+  stream: ""
+  command: ""
+  event: ""
+  readmodel: ""
+  message: 'Names must be unique within a bounded context: ''TeamMemberInvited'' found
+    2 times in ''Register & log in''.'
+- errorid: NamesMustBeUnique
+  context: ""
+  stream: ""
+  command: ""
+  event: ""
+  readmodel: ""
+  message: 'Names must be unique within a bounded context: ''Register'' found 2 times
+    in ''Register & log in''.'
+- errorid: NamesMustBeUnique
+  context: ""
+  stream: ""
+  command: ""
+  event: ""
+  readmodel: ""
+  message: 'Names must be unique within a bounded context: ''UserAuthenticated'' found
+    2 times in ''Register & log in''.'
+- errorid: NamesMustBeUnique
+  context: ""
+  stream: ""
+  command: ""
+  event: ""
+  readmodel: ""
+  message: 'Names must be unique within a bounded context: ''UserRegistered'' found
+    2 times in ''Register & log in''.'
+- errorid: NamesMustBeUnique
+  context: ""
+  stream: ""
+  command: ""
+  event: ""
+  readmodel: ""
+  message: 'Names must be unique within a bounded context: ''Team'' found 2 times
+    in ''Register & log in''.'
+- errorid: InvalidCommandParameterName
+  context: Register & log in
+  stream: User
+  command: ""
+  event: ""
+  readmodel: ""
+  message: 'Invalid command parameter name ''Register'': Names must start with an
+    alpha character and contain no spaces.'
+- errorid: InvalidEventPropertyName
+  context: Register & log in
+  stream: User
+  command: ""
+  event: ""
+  readmodel: ""
+  message: 'Invalid event property name ''email=tony@starkindustries.net'': Names
+    must start with a character and contain no spaces.'
+- errorid: InvalidEventPropertyName
+  context: Register & log in
+  stream: User
+  command: ""
+  event: ""
+  readmodel: ""
+  message: 'Invalid event property name ''role=admin'': Names must start with a character
+    and contain no spaces.'
+- errorid: InvalidEventPropertyName
+  context: Register & log in
+  stream: User
+  command: ""
+  event: ""
+  readmodel: ""
+  message: 'Invalid event property name ''email=tony@starkindustries.net'': Names
+    must start with a character and contain no spaces.'
+- errorid: InvalidEventPropertyName
+  context: Register & log in
+  stream: User
+  command: ""
+  event: ""
+  readmodel: ""
+  message: 'Invalid event property name ''role=member'': Names must start with a character
+    and contain no spaces.'
+- errorid: MustExistInReadmodelNotFound
+  context: Register & log in
+  stream: Team
+  command: InviteTeamMember
+  event: ""
+  readmodel: ""
+  message: '''InviteTeamMember adminUserId'' has a MustExistIn UserLookup rule, but
+    that read model does not exist.'
+- errorid: InvalidCommandParameterName
+  context: Register & log in
+  stream: Team
+  command: ""
+  event: ""
+  readmodel: ""
+  message: 'Invalid command parameter name ''InviteTeamMember'': Names must start
+    with an alpha character and contain no spaces.'
+- errorid: MustExistInReadmodelNotFound
+  context: Register & log in
+  stream: Team
+  command: AcceptInvitation
+  event: ""
+  readmodel: ""
+  message: '''AcceptInvitation userId'' has a MustExistIn UserLookup rule, but that
+    read model does not exist.'
+- errorid: MustExistInReadmodelNotFound
+  context: Register & log in
+  stream: Team
+  command: AcceptInvitation
+  event: ""
+  readmodel: ""
+  message: '''AcceptInvitation invitationId'' has a MustExistIn InvitationLookup rule,
+    but that read model does not exist.'
+- errorid: InvalidEventPropertyName
+  context: Register & log in
+  stream: Team
+  command: ""
+  event: ""
+  readmodel: ""
+  message: 'Invalid event property name ''email=tony@starkindustries.net'': Names
+    must start with a character and contain no spaces.'
+- errorid: InvalidEventPropertyName
+  context: Register & log in
+  stream: Team
+  command: ""
+  event: ""
+  readmodel: ""
+  message: 'Invalid event property name ''email=pepper@starkindustries.net'': Names
+    must start with a character and contain no spaces.'

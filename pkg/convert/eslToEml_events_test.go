@@ -1,6 +1,7 @@
 package convert_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/robertreppel/les/pkg/convert"
@@ -201,5 +202,86 @@ func TestShouldStripSpacesFromCommandParameterNames(t *testing.T) {
 
 	if parameterName != "UserEmail" {
 		t.Error("expected command parameter name to have no spaces.")
+	}
+}
+
+func TesEventtPropertyExampleValuesShouldBeAllowedButIgnored(t *testing.T) {
+	input := []string{
+		"User Registered : email=tony@starkindustries.net",
+	}
+	markdown, err := esl.Parse(input)
+	if err != nil {
+		panic(err)
+	}
+	markup, err := convert.EslToEml(markdown)
+	if err != nil {
+		panic(err)
+	}
+
+	if len(markup.MarkdownValidationErrors) != 0 {
+		fmt.Println(markup.MarkdownValidationErrors)
+		t.Error("expected no validation errors")
+	}
+
+	var event = markup.Esl.Contexts[0].Streams[0].Events[0].Event
+	fmt.Println(event.Properties[0].Name)
+	if event.Properties[0].Name != "email" {
+		fmt.Println(event)
+		t.Error("expected different property name")
+	}
+}
+
+func TestCommandParameterExampleValuesShouldBeAllowedButIgnored(t *testing.T) {
+	input := []string{
+		"Register-> email=clara@starkindustries.net",
+		"User Registered",
+	}
+	markdown, err := esl.Parse(input)
+	if err != nil {
+		panic(err)
+	}
+	markup, err := convert.EslToEml(markdown)
+	if err != nil {
+		panic(err)
+	}
+
+	if len(markup.MarkdownValidationErrors) != 0 {
+		fmt.Println(markup.MarkdownValidationErrors)
+		t.Error("expected no validation errors")
+	}
+
+	var command = markup.Esl.Contexts[0].Streams[0].Commands[0].Command
+	fmt.Println(command.Parameters[0].Name)
+	if command.Parameters[0].Name != "email" {
+		fmt.Println(command)
+		t.Error("expected different property name")
+	}
+}
+
+
+func TestDocumentPropertyExampleValuesShouldBeAllowedButIgnored(t *testing.T) {
+	input := []string{
+		"User Registered: email",
+		"Team* : email=tony@starkindustries.net",
+	}
+	markdown, err := esl.Parse(input)
+	if err != nil {
+		panic(err)
+	}
+	markup, err := convert.EslToEml(markdown)
+	if err != nil {
+		panic(err)
+	}
+
+	if len(markup.MarkdownValidationErrors) != 0 {
+		fmt.Println(markup.MarkdownValidationErrors)
+		t.Error("expected no validation errors")
+	}
+
+	var event = markup.Esl.Contexts[0].Streams[0].Events[0].Event
+	fmt.Println(event.Properties[0].Name)
+	if event.Properties[0].Name != "email" {
+		fmt.Println(event)
+		t.Error("expected different property name")
 	}
 }

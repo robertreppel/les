@@ -14,7 +14,7 @@ import (
 // - Event Modeling Language is used to specify event sourced systems for the Adaptech Platform.
 func EslToEml(markdown esl.Esl) (EslToEmlConversion, error) {
 	result := EslToEmlConversion{
-		Esl: eml.Solution{},
+		Esl:                      eml.Solution{},
 		MarkdownValidationErrors: []esl.EslValidationError{},
 	}
 
@@ -137,7 +137,6 @@ func getStreams(markdown esl.Esl, result EslToEmlConversion) EslToEmlConversion 
 	foundEvents := make(map[string][]eml.Event)
 	foundCommands := make(map[string][]eml.Command)
 	var mostRecentCommand *eml.Command
-
 	for _, item := range markdown.Lines {
 		switch item.(type) {
 		case esl.Command:

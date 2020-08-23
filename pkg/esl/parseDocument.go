@@ -18,10 +18,12 @@ func parseDocument(eslInput string, lineItems []Item) []Item {
 			propertiesList := first[2]
 			propertiesList = strings.Trim(propertiesList, ", ")
 			inputProperties := strings.Split(propertiesList, ",")
-			for _, inputParameter := range inputProperties {
-				if inputParameter != "" {
-					var parsedParameter = Property{Name: strings.Trim(inputParameter, " ")}
-					properties = append(properties, parsedParameter)
+			for _, inputProperty := range inputProperties {
+				if inputProperty != "" {
+					var propertyName =strings.Trim(inputProperty, " ")
+					propertyName = strings.Split(propertyName, "=")[0] // Ignore example values, e.g. email=asdf@gmail.com
+					var parsedProperty = Property{Name: propertyName}
+					properties = append(properties, parsedProperty)
 				}
 			}
 			lineItems = append(lineItems, Document{Name: strings.Trim(document[0][1], " "), Properties: properties})
