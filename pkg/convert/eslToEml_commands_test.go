@@ -2,6 +2,7 @@ package convert_test
 
 import (
 	"testing"
+	"fmt"
 
 	"github.com/robertreppel/les/pkg/convert"
 	"github.com/robertreppel/les/pkg/eml"
@@ -560,3 +561,32 @@ func TestParameterWithAggregatePostfixMustExistInReadmodelThatExistsAndHasKeySuc
 		t.Log(sut.Errors)
 	}
 }
+
+func TestCommandParameterExampleValuesShouldBeAllowedButIgnored(t *testing.T) {
+	input := []string{
+		"Register-> email=clara@starkindustries.net",
+		"User Registered",
+	}
+	markdown, err := esl.Parse(input)
+	if err != nil {
+		panic(err)
+	}
+	markup, err := convert.EslToEml(markdown)
+	if err != nil {
+		panic(err)
+	}
+
+	if len(markup.MarkdownValidationErrors) != 0 {
+		fmt.Println(markup.MarkdownValidationErrors)
+		t.Error("expected no validation errors")
+	}
+
+	var command = markup.Esl.Contexts[0].Streams[0].Commands[0].Command
+	fmt.Println(command.Parameters[0].Name)
+	if command.Parameters[0].Name != "email" {
+		fmt.Println(command)
+		t.Error("expected different property name")
+	}
+}
+
+

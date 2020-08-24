@@ -2,6 +2,7 @@ package convert_test
 
 import (
 	"testing"
+	"fmt"
 
 	"github.com/robertreppel/les/pkg/convert"
 	"github.com/robertreppel/les/pkg/eml"
@@ -236,4 +237,32 @@ func hasError(errorId string, errors []eml.ValidationError) bool {
 		}
 	}
 	return false
+}
+
+
+func TestDocumentPropertyExampleValuesShouldBeAllowedButIgnored(t *testing.T) {
+	input := []string{
+		"User Registered: email",
+		"Team* : email=tony@starkindustries.net",
+	}
+	markdown, err := esl.Parse(input)
+	if err != nil {
+		panic(err)
+	}
+	markup, err := convert.EslToEml(markdown)
+	if err != nil {
+		panic(err)
+	}
+
+	if len(markup.MarkdownValidationErrors) != 0 {
+		fmt.Println(markup.MarkdownValidationErrors)
+		t.Error("expected no validation errors")
+	}
+
+	var event = markup.Esl.Contexts[0].Streams[0].Events[0].Event
+	fmt.Println(event.Properties[0].Name)
+	if event.Properties[0].Name != "email" {
+		fmt.Println(event)
+		t.Error("expected different property name")
+	}
 }
