@@ -24,5 +24,10 @@ User Authenticated: userId
 // Tony accepts Clara's team invitation, kicking off the "Accept Invitation" workflow by clicking the invitation link in the invitation email.
 Accept Invitation-> userId, invitationId
 Team Invitation Accepted : userId, teamId
-Team* : teamId, userId, email=tony@starkindustries.net
+
+Teams* : teamId, userId, email=tony@starkindustries.net, adminUserId
+
+UserLookup* : userId, email, role
+
+InvitationLookup* : invitationId
 
