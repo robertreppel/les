@@ -20,19 +20,19 @@ func parseDocument(eslInput string, lineItems []Item) []Item {
 			inputProperties := strings.Split(propertiesList, ",")
 			for _, inputProperty := range inputProperties {
 				if inputProperty != "" {
-					var propertyName =strings.Trim(inputProperty, " ")
+					var propertyName = strings.Trim(inputProperty, " ")
 					propertyName = strings.Split(propertyName, "=")[0] // Ignore example values, e.g. email=asdf@gmail.com
 					var parsedProperty = Property{Name: propertyName}
 					properties = append(properties, parsedProperty)
 				}
 			}
-			lineItems = append(lineItems, Document{Name: strings.Trim(document[0][1], " "), Properties: properties})
+			lineItems = append(lineItems, Document{Name: strings.Trim(document[0][1], " "), Type: "Document", Properties: properties})
 			return lineItems
 		}
 	} else {
 		spacesRemoved := strings.Trim(eslInput, " ")
 		documentName := strings.Replace(spacesRemoved, "*", "", -1)
-		lineItems = append(lineItems, Document{Name: documentName})
+		lineItems = append(lineItems, Document{Name: documentName, Type: "Document"})
 	}
 	return lineItems
 }

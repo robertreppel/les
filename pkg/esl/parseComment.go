@@ -12,7 +12,7 @@ func parseComment(eslInput string, lineItems []Item) []Item {
 		commentText := strings.Trim(comment[0][1], " ")
 		commentText = strings.TrimLeft(commentText, "/")
 		commentText = strings.TrimLeft(commentText, " ")
-		lineItems = append(lineItems, Comment{Text: commentText})
+		lineItems = append(lineItems, Comment{Text: commentText, Type: "Comment"})
 	}
 	return lineItems
 }

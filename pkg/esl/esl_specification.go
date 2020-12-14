@@ -15,6 +15,7 @@ type Item interface {
 // Example:
 // "Order Placed"
 type Comment struct {
+	Type string
 	Text string
 }
 
@@ -22,6 +23,7 @@ type Comment struct {
 // Example:
 // "Place Order-> // orderId, placedDate, deliveryDate"
 type Command struct {
+	Type       string
 	Name       string
 	Parameters []Parameter
 }
@@ -33,12 +35,14 @@ type Parameter struct {
 
 // Event describes an esl event
 type Event struct {
+	Type       string
 	Name       string
 	Properties []Property
 }
 
 // Document describes an esl read model document
 type Document struct {
+	Type       string
 	Name       string
 	Properties []Property
 }

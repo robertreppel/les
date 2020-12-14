@@ -6,6 +6,26 @@ import (
 	"github.com/robertreppel/les/pkg/esl"
 )
 
+func TestShouldGetItemOfTypeEvent(t *testing.T) {
+	input := []string{"UserCreated"}
+	result, err := esl.Parse(input)
+	if err != nil {
+		panic(err)
+	}
+	if len(result.Lines) == 0 {
+		t.Error("no event found")
+		return
+	}
+	switch result.Lines[0].(type) {
+	case esl.Event:
+		if result.Lines[0].(esl.Event).Type != "Event" {
+			t.Error("Unexpected Event.Type")
+		}
+	default:
+		t.Error("expected event")
+	}
+}
+
 func TestShouldGetEventWithProperties(t *testing.T) {
 	input := []string{"User Registered : userId, email, password                     "}
 	result, err := esl.Parse(input)
@@ -20,6 +40,9 @@ func TestShouldGetEventWithProperties(t *testing.T) {
 	case esl.Event:
 		if result.Lines[0].(esl.Event).Name != "User Registered" {
 			t.Error("Unexpected Event.Name")
+		}
+		if result.Lines[0].(esl.Event).Type != "Event" {
+			t.Error("Unexpected Event.Type")
 		}
 	default:
 		t.Error("expected event")

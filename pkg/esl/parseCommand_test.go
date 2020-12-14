@@ -6,6 +6,26 @@ import (
 	"github.com/robertreppel/les/pkg/esl"
 )
 
+func TestShouldGetItemOfTypeCommand(t *testing.T) {
+	input := []string{"  Validate Registration  -> : userId                     "}
+	result, err := esl.Parse(input)
+	if err != nil {
+		panic(err)
+	}
+	if len(result.Lines) == 0 {
+		t.Error("no command found")
+		return
+	}
+	switch result.Lines[0].(type) {
+	case esl.Command:
+		if result.Lines[0].(esl.Command).Type != "Command" {
+			t.Error("Unexpected Command.Type")
+		}
+	default:
+		t.Error("expected command")
+	}
+}
+
 func TestShouldGetCommandWithParameters(t *testing.T) {
 	input := []string{"  Validate Registration  -> : userId                     "}
 	result, err := esl.Parse(input)

@@ -18,55 +18,22 @@ func parseEvent(eslInput string, lineItems []Item) []Item {
 			propertiesList := first[2]
 			propertiesList = strings.Trim(propertiesList, ", ")
 			var eventName = strings.Trim(event[0][1], " ")
-			var existingItemIndex = foundPreviously(lineItems, eventName)
 			if len(propertiesList) > 0 {
 				inputProperties := strings.Split(propertiesList, ",")
 				for _, inputProperty := range inputProperties {
-					var propertyName =strings.Trim(inputProperty, " ")
+					var propertyName = strings.Trim(inputProperty, " ")
 					propertyName = strings.Split(propertyName, "=")[0] // Ignore example values, e.g. email=asdf@gmail.com
 					var parsedProperty = Property{Name: propertyName}
 					properties = append(properties, parsedProperty)
 				}
-				if existingItemIndex != -1 {
-					lineItems[existingItemIndex] = Event{Name: eventName, Properties: properties}
-				} else {
-					lineItems = append(lineItems, Event{Name: eventName, Properties: properties})
-				}
+				lineItems = append(lineItems, Event{Name: eventName, Type: "Event", Properties: properties})
 
 			} else {
-				if existingItemIndex == -1 {
-					lineItems = append(lineItems, Event{Name: eventName})
-				}
+				lineItems = append(lineItems, Event{Name: eventName, Type: "Event"})
 			}
-
 		}
 	} else {
-		var eventName = strings.Trim(eslInput, " ")
-		var itemIndex = foundPreviously(lineItems, eventName)
-		if itemIndex != -1 {
-			return lineItems
-		}
-		lineItems = append(lineItems, Event{Name: strings.Trim(eslInput, " ")})
+		lineItems = append(lineItems, Event{Name: strings.Trim(eslInput, " "), Type: "Event"})
 	}
 	return lineItems
-}
-
-func foundPreviously(lineItems []Item, itemName string) int {
-	for index, item := range lineItems {
-		switch item.(type) {
-		case Event:
-			if item.(Event).Name == itemName {
-				return index
-			}
-		case Command:
-			if item.(Command).Name == itemName {
-				return index
-			}
-		case Document:
-			if item.(Document).Name == itemName {
-				return index
-			}
-		}
-	}
-	return -1
 }

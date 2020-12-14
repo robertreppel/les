@@ -6,8 +6,28 @@ import (
 	"github.com/robertreppel/les/pkg/esl"
 )
 
+func TestShouldGetItemOfTypeDocument(t *testing.T) {
+	input := []string{"UserList*"}
+	result, err := esl.Parse(input)
+	if err != nil {
+		panic(err)
+	}
+	if len(result.Lines) == 0 {
+		t.Error("no document found")
+		return
+	}
+	switch result.Lines[0].(type) {
+	case esl.Document:
+		if result.Lines[0].(esl.Document).Type != "Document" {
+			t.Error("Unexpected Document.Type")
+		}
+	default:
+		t.Error("expected document")
+	}
+}
+
 func TestShouldGetDocumentWithParameters(t *testing.T) {
-	input := []string{"  Validate Registration  -> : userId                     "}
+	input := []string{"  Validated Registrations* : userId                     "}
 	result, err := esl.Parse(input)
 	if err != nil {
 		panic(err)
@@ -17,12 +37,15 @@ func TestShouldGetDocumentWithParameters(t *testing.T) {
 		return
 	}
 	switch result.Lines[0].(type) {
-	case esl.Command:
-		if result.Lines[0].(esl.Command).Name != "Validate Registration" {
-			t.Error("Unexpected Command.Name")
+	case esl.Document:
+		if result.Lines[0].(esl.Document).Name != "Validated Registrations" {
+			t.Error("Unexpected Document.Name")
+		}
+		if result.Lines[0].(esl.Document).Type != "Document" {
+			t.Error("Unexpected Document.Type")
 		}
 	default:
-		t.Error("expected command")
+		t.Error("expected document")
 	}
 }
 
